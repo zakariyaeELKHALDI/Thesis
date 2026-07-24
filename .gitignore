@@ -1,0 +1,33 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets and API keys
+.env
+.env.*
+!.env.example
+
+# Private copyrighted source data
+data/raw/*
+!data/raw/.gitkeep
+
+# Extracted textbook content
+data/interim/*
+!data/interim/.gitkeep
+
+# Generated vector indexes
+artifacts/faiss/*
+!artifacts/faiss/.gitkeep
+
+# Operating-system files
+.DS_Store
+Thumbs.db
