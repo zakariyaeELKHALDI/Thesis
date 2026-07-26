@@ -1,0 +1,17 @@
+Initial environment snapshot
+Recorded: 2026-07-26
+Stage: Before installing project packages
+
+Platform: WSL2
+Operating system: Ubuntu 24.04.1 LTS
+Kernel: 6.18.33.2-microsoft-standard-WSL2
+Architecture: x86_64
+
+Python: 3.12.3
+pip: 24.0
+Git: 2.43.0
+Virtual environment: .venv
+Jupyter before setup: Not installed
+
+Initial virtual-environment packages:
+pip==24.0
