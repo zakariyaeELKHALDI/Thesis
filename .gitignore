@@ -16,9 +16,25 @@ __pycache__/
 .env.*
 !.env.example
 
-# Private copyrighted source data
+# Private copyrighted source and evaluation data
+
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/corpus/
+!data/raw/evaluation/
+!data/raw/ground_truth/
+
+data/raw/corpus/*
+!data/raw/corpus/.gitkeep
+
+data/raw/evaluation/*
+!data/raw/evaluation/questions/
+
+data/raw/evaluation/questions/*
+!data/raw/evaluation/questions/.gitkeep
+
+data/raw/ground_truth/*
+!data/raw/ground_truth/.gitkeep
 
 # Extracted textbook content
 data/interim/*

@@ -143,6 +143,28 @@ The pipeline will expose each stage separately:
 
 Ground-truth solutions will never enter the extraction, embedding, indexing, retrieval or generation stages.
 
+
+## Repository data boundaries
+
+The repository separates source documents, benchmark inputs, reference answers and generated results so that evaluation material cannot be incorporated into the retrieval corpus.
+
+| Path | Role | Permitted pipeline use |
+|---|---|---|
+| `data/raw/corpus/` | Authorised textbook source files | The only raw-data directory permitted as input to source ingestion, extraction, chunking, corpus embedding and FAISS index construction |
+| `data/raw/evaluation/questions/` | Wider question bank and focused Hard-20 benchmark questions | May be loaded only as runtime evaluation queries after index construction; must never be treated as corpus documents or stored in the FAISS index |
+| `data/raw/ground_truth/` | Official solution-manual reference answers | May be accessed only by the separate evaluation stage after an answer has been generated; must never enter retrieval or generation |
+| `results/runs/` | Generated answers, retrieved-chunk records, configurations, timings and provenance | Output location only; previous run artefacts must not become inputs to the same controlled benchmark |
+
+The following enforcement rules apply:
+
+1. Corpus ingestion must be explicitly restricted to `data/raw/corpus/`.
+2. A recursive corpus loader must never be pointed at the complete `data/raw/` directory.
+3. Evaluation questions may be embedded as retrieval queries at runtime, but they must not be added to the corpus index.
+4. Ground-truth answers must remain unavailable to retrieval and generation and may be loaded only after model-answer generation.
+5. Actual source, question and ground-truth files must remain ignored by Git; only their structural `.gitkeep` placeholders may be tracked.
+6. An automated leakage-prevention test must verify these boundaries before the experimental pipeline is accepted.
+
+
 ## Why an explicit pipeline was selected
 
 The baseline paper describes a conversational retrieval chain but does not prove that the authors used the class named `ConversationalRetrievalChain`.
