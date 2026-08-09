@@ -1,3 +1,19 @@
 # Interactive notebook environment
+
 jupyterlab
 ipykernel
+
+# Core RAG pipeline
+
+langchain-core
+langchain-openai
+langchain-text-splitters
+
+# Vector search and numerical arrays
+
+faiss-cpu
+numpy
+
+# Environment configuration
+
+python-dotenv
