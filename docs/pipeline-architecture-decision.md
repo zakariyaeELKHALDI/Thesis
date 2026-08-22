@@ -141,8 +141,21 @@ The pipeline will expose each stage separately:
 12. separate evaluation against ground truth.
 
 
-Ground-truth solutions will never enter the extraction, embedding, indexing, retrieval or generation stages.
+Ground-truth solutions must remain unavailable to corpus chunking, corpus embedding, FAISS index construction, retrieval and model generation. They may be loaded only by the separate evaluation stage after the corresponding model answer has been generated.
 
+During corpus preparation, problem statements, their question parts and selected answers may be inspected only to detect and exclude their regions. They must never become retained instructional content or be passed to corpus chunking, corpus embedding, FAISS index construction or the retrieved context.
+
+Problem statements may later be processed through a separate evaluation-only pipeline and supplied as runtime retrieval queries and generation inputs. Selected answers may be processed only as ground truth and must remain unavailable until after the corresponding model answer has been generated.
+
+## Mixed-content textbook filtering
+
+The Das and Sobhan textbook is a mixed-content source: instructional material, end-of-chapter problems and selected answers are stored in the same PDF. The original PDF will remain unchanged for provenance, but it must never be passed directly to chunking or index construction.
+
+A layout-aware preprocessing stage will identify the exact `Problems`, `References`, `Answers to Selected Problems` and `Index` heading blocks and create page-coordinate exclusion regions. For every chapter, all content from the `Problems` heading up to, but not including, the `References` heading will be excluded. This includes parent problems, lettered question parts, critical-thinking problems, figures, tables and content continuing across pages. The complete `Answers to Selected Problems` section will also be excluded.
+
+Content before a mid-page `Problems` heading and content from a mid-page `References` heading onward will be retained. Only the filtered instructional output under `data/interim/` may enter chunking, embedding and FAISS index construction.
+
+The preprocessing stage must stop with an error if the expected boundary headings are missing, duplicated or out of order. Every retained element must preserve its source PDF page and bounding-box provenance. An automated audit must confirm that no retained element overlaps an excluded region before the index is built.
 
 ## Repository data boundaries
 
