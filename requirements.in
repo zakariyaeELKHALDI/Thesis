@@ -3,6 +3,10 @@
 jupyterlab
 ipykernel
 
+# PDF layout extraction
+
+pymupdf
+
 # Core RAG pipeline
 
 langchain-core
