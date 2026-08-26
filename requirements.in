@@ -21,3 +21,6 @@ numpy
 # Environment configuration
 
 python-dotenv
+
+pypdf
+pdfplumber
