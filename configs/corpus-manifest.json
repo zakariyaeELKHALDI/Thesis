@@ -1,0 +1,74 @@
+{
+  "manifest_schema_version": "1.0",
+  "manifest_created_date": "2026-08-29",
+  "corpus": {
+    "corpus_id": "das-sobhan-2014-principles-geotechnical-engineering-8e-si",
+    "role": "retrieval_corpus",
+    "source_document_count": 1,
+    "processed_output_directory": "data/interim/"
+  },
+  "sources": [
+    {
+      "source_id": "das-sobhan-2014-8e-si",
+      "relative_path": "data/raw/corpus/das-sobhan-principles-geotechnical-engineering-8e-si.pdf",
+      "file_name": "das-sobhan-principles-geotechnical-engineering-8e-si.pdf",
+      "media_type": "application/pdf",
+      "pdf_format": "PDF 1.4",
+      "sha256": "734cc8ad0824bbe8ae5f21db5bd5f9dd1850a620c4f85f497daf55d64cd65be6",
+      "size_bytes": 34607091,
+      "pdf_page_count": 770,
+      "bibliographic_identity": {
+        "authors": [
+          "Braja M. Das",
+          "Khaled Sobhan"
+        ],
+        "title": "Principles of Geotechnical Engineering",
+        "edition": "8th edition, SI",
+        "publication_year": 2014
+      },
+      "repository_policy": {
+        "tracked_by_git": false,
+        "local_research_source": true,
+        "copyrighted_source_text_in_manifest": false
+      }
+    }
+  ],
+  "pipeline_boundaries": {
+    "only_raw_corpus_input_directory": "data/raw/corpus/",
+    "direct_indexing_of_raw_pdf_allowed": false,
+    "required_preprocessing": "layout-aware positioned extraction",
+    "excluded_from_retrieval_corpus": [
+      "chapter problem regions",
+      "answers to selected problems",
+      "index"
+    ],
+    "evaluation_questions_directory": "data/raw/evaluation/questions/",
+    "ground_truth_directory": "data/raw/ground_truth/",
+    "ground_truth_available_during_generation": false
+  },
+  "extraction_decision": {
+    "production_library": "PyMuPDF",
+    "python_package": "pymupdf",
+    "package_version": "1.28.2",
+    "extraction_mode": "positioned page extraction with bounding-box provenance",
+    "formula_reconstruction_in_baseline": false,
+    "mathematical_control_character_policy": "retain ambiguous extracted controls without global replacement"
+  },
+  "evidence": [
+    {
+      "path": "notebooks/pdf_parser_audit.ipynb",
+      "commit": "855d5b9",
+      "role": "comparative parser audit"
+    },
+    {
+      "path": "notebooks/01_textbook_layout_exploration.ipynb",
+      "commit": "9f6c89e",
+      "role": "layout, exclusion and mathematical-control audit"
+    },
+    {
+      "path": "docs/pipeline-architecture-decision.md",
+      "commit": "bcdf916",
+      "role": "accepted architecture decision"
+    }
+  ]
+}

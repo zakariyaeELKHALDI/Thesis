@@ -57,6 +57,8 @@ The supporting implementation and evidence are recorded in:
 - `notebooks/pdf_parser_audit.ipynb`, commit `855d5b9`;
 - `notebooks/01_textbook_layout_exploration.ipynb`, commit `9f6c89e`.
 
+The exact local source identity is frozen in `configs/corpus-manifest.json`. The manifest records the SHA-256 hash, byte size, PDF page count, bibliographic identity, permitted pipeline role and extraction decision without storing copyrighted textbook text.
+
 ## Hard-20 question identifiers
 
 The focused benchmark contains:

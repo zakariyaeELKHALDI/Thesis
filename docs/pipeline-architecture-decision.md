@@ -283,11 +283,11 @@ This requires slightly more implementation code, but the additional code represe
 
 ## Remaining unresolved decisions
 
-The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. These decisions must now be frozen through a versioned corpus manifest and reusable implementation.
+The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. The source identity and these decisions are now frozen in `configs/corpus-manifest.json`. They must next be enforced by reusable validation and extraction code.
 
 The following values remain unresolved before the baseline configuration can be frozen:
 
-1. source-file hash, byte size and page count in the corpus manifest;
+1. automated validation of the local source identity against the versioned corpus manifest before extraction;
 2. production corpus-record and export schema;
 3. remaining table and page-reference preservation checks;
 4. text-normalisation rules beyond the validated edge trimming and structural exclusions;
