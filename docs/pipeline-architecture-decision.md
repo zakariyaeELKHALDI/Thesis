@@ -4,6 +4,7 @@
 
 - **Status:** Accepted for initial implementation, subject to the verification gates defined below
 - **Date:** 2026-07-27
+- **Last reviewed:** 2026-08-29
 - **Scope:** Baseline reconstruction, model comparison and parameter-sensitivity experiments
 - **Related document:** `docs/baseline-replication-audit.md`
 
@@ -33,6 +34,9 @@ This decision must be recorded before installing the main RAG dependencies so th
 | Use current component-specific LangChain packages | Practical adjustment | The LangChain package structure has changed since the baseline implementation |
 | Use `faiss-cpu` directly rather than the archived `langchain-community` wrapper | Reconstructed baseline decision and practical adjustment | The paper reports FAISS but does not state which wrapper was used |
 | Use `.env` rather than `constants.py` for API keys | Practical security adjustment | This preserves the paper's separation of credentials while preventing secrets from entering Git |
+| Use positioned PyMuPDF for textbook extraction | Reconstructed baseline decision | The paper does not identify its exact PDF loader, while PyMuPDF preserves the geometry required for mixed-content filtering and provenance |
+| Exclude problem and selected-answer regions by page coordinates | Data-leakage prevention decision | The textbook combines instructional content with evaluation and ground-truth material in the same PDF |
+| Leave ambiguous mathematical control characters unreconstructed in the baseline | Baseline-scope decision | Glyph-aware evidence shows that global control-code replacement would corrupt mathematical symbols |
 | Run every benchmark question in a clean session | Reconstructed experimental-control decision | The paper does not explain its conversation-history procedure, and shared history would create order effects |
 | Allow conversation history only in a separate interactive tutor mode | Thesis implementation decision | A working tutor should support follow-up interaction, but this must not affect controlled benchmarking |
 | Change only the generator model during the main model comparison | Direct requirement from the approved proposal | This is required for a fair comparison under Research Question 2 |
@@ -157,6 +161,18 @@ Content before a mid-page `Problems` heading and content from a mid-page `Refere
 
 The preprocessing stage must stop with an error if the expected boundary headings are missing, duplicated or out of order. Every retained element must preserve its source PDF page and bounding-box provenance. An automated audit must confirm that no retained element overlaps an excluded region before the index is built.
 
+### Completed parser and layout audit
+
+The comparative audit tested positioned PyMuPDF extraction, `pypdf` layout extraction, `pdfplumber` and Poppler `pdftotext`. Positioned PyMuPDF was selected for production because it retained the page and bounding-box geometry required by the exclusion rules and provenance design.
+
+The verified environment uses PyMuPDF `1.28.2`. The locked `pypdf 6.16.2` and `pdfplumber 0.11.10` packages remain available to reproduce the comparative audit, but they are not selected as production corpus extractors. Poppler `pdftotext` remains a system-level audit comparator.
+
+The layout investigation validated the textbook heading boundaries and retained regions before any corpus chunking. It also matched all 9,825 retained unexpected control characters to rendered glyph IDs. Twenty of the 31 font/code groups contained multiple glyph IDs, and visual examples confirmed that identical extracted font/code combinations can represent different mathematical symbols.
+
+Global control-character replacement is therefore rejected. The reconstructed baseline will document the extracted mathematical-font limitation without adding hand-built formula reconstruction. Any formula-aware reconstruction must be implemented and evaluated later as a separate experimental extension.
+
+The supporting evidence is stored in `notebooks/pdf_parser_audit.ipynb` at commit `855d5b9` and `notebooks/01_textbook_layout_exploration.ipynb` at commit `9f6c89e`.
+
 ## Repository data boundaries
 
 The repository separates source documents, benchmark inputs, reference answers and generated results so that evaluation material cannot be incorporated into the retrieval corpus.
@@ -240,7 +256,8 @@ The baseline paper does not report its dependency versions. Current maintained v
 | `python-dotenv` | Loads API credentials from the untracked `.env` file | Include |
 | `langchain-classic` | Provides legacy chains such as `ConversationalRetrievalChain` | Exclude from the main dependency group |
 | `langchain-community` | Provides older community wrappers, including a FAISS wrapper | Exclude because it is archived and direct FAISS gives clearer control |
-| `pypdf` or another PDF parser | Extracts the authorised textbook content | Defer until an extraction-quality test is performed |
+| `pymupdf` | Provides positioned textbook extraction, page geometry and glyph-level diagnostics | Include as the production extractor; selected after the comparative parser audit |
+| `pypdf` and `pdfplumber` | Provide alternative extraction outputs used by the parser audit | Retain as audit dependencies, but do not use for baseline corpus production |
 | Additional provider SDKs | Connect to non-OpenAI models | Defer until the comparison models and endpoints are selected |
 | Evaluation libraries | Statistical processing and result tables | Add later when the scoring procedure is frozen |
 | Testing libraries | Automated unit and integration tests | Add with the first reusable implementation module |
@@ -264,14 +281,16 @@ Using `faiss-cpu` directly allows the project to control and document:
 
 This requires slightly more implementation code, but the additional code represents meaningful technical work and improves reproducibility.
 
-## Unresolved decisions
+## Remaining unresolved decisions
 
-The architecture is selected, but the following values must be resolved separately before the baseline configuration is frozen:
+The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. These decisions must now be frozen through a versioned corpus manifest and reusable implementation.
 
-1. authorised textbook file and its exact edition;
-2. PDF extraction method;
-3. formula, table and page-reference preservation;
-4. text normalisation rules;
+The following values remain unresolved before the baseline configuration can be frozen:
+
+1. source-file hash, byte size and page count in the corpus manifest;
+2. production corpus-record and export schema;
+3. remaining table and page-reference preservation checks;
+4. text-normalisation rules beyond the validated edge trimming and structural exclusions;
 5. text-splitter separator and length function;
 6. handling of chunks that exceed the intended size;
 7. exact OpenAI embedding model;
@@ -287,7 +306,7 @@ The architecture is selected, but the following values must be resolved separate
 17. evaluation rubric and scoring procedure;
 18. storage format for experiment results;
 19. selected models for the newer-model comparison;
-20. optional formula or unit-consistency extension.
+20. optional enhanced formula or unit-consistency extension.
 
 Each item must receive its own evidence-based decision or be grouped with technically related items.
 
@@ -385,6 +404,8 @@ The architecture will be accepted for experiments only after the following check
 12. exact dependency lock regeneration;
 13. frozen baseline configuration;
 14. Git checkpoint containing the verified implementation and documentation.
+
+The parser and layout notebooks provide the initial evidence required for extraction-quality gate 8. The gate remains open until the audited logic is transferred into reusable `src/` code, tested automatically and used to produce a validated interim corpus.
 
 A successful package installation alone will not be treated as proof that the RAG system works correctly.
 

@@ -38,6 +38,24 @@ No value that is not reported by the paper should enter the baseline configurati
 | Focused benchmark | 20 challenging questions | Confirmed |
 | Ground truth | Official textbook solution manual | Must remain outside the retrieval corpus |
 | Evaluation dimensions | Accuracy, formula integration, explanation clarity and adaptability | Confirmed; operational scoring procedure still requires reconstruction |
+| PDF extraction method | The exact loader and extraction behaviour are not reported | Positioned PyMuPDF selected after a comparative parser audit |
+| Mixed-content filtering | The paper does not report filtering textbook problems or selected answers from a mixed-content PDF | Layout-aware page-coordinate exclusion is required to prevent evaluation leakage |
+| Mathematical-symbol handling | Advanced formula integration is discussed as future development | No hand-built formula reconstruction is added to the replication baseline |
+
+## Completed corpus-extraction decisions
+
+The parser audit compared positioned PyMuPDF extraction, `pypdf` layout extraction, `pdfplumber` and Poppler `pdftotext`. Positioned PyMuPDF was selected because it preserves page coordinates and bounding-box provenance required for filtering the mixed-content textbook.
+
+The layout investigation identified and validated the boundaries of the instructional content, chapter problem sections, references, selected answers and index. Problem statements and selected answers are excluded before any future chunking, embedding or FAISS index construction.
+
+The retained extraction contains 9,825 unexpected control-character occurrences across 31 font/code groups. Glyph-aware analysis found that 20 of these groups contain multiple rendered glyph IDs. Visual validation confirmed that the same extracted font and control code can represent different mathematical symbols, including equality and addition signs or greater-than and multiplication signs.
+
+A global control-character replacement would therefore corrupt mathematical content. No replacement mapping or hand-built formula reconstruction is applied in the replication baseline. Formula-aware reconstruction remains a possible separate extension whose effect must be evaluated independently.
+
+The supporting implementation and evidence are recorded in:
+
+- `notebooks/pdf_parser_audit.ipynb`, commit `855d5b9`;
+- `notebooks/01_textbook_layout_exploration.ipynb`, commit `9f6c89e`.
 
 ## Hard-20 question identifiers
 
