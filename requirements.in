@@ -22,5 +22,11 @@ numpy
 
 python-dotenv
 
+# PDF parser audit dependencies
+
 pypdf
 pdfplumber
+
+# Testing
+
+pytest
