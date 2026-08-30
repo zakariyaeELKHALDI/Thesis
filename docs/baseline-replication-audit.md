@@ -59,6 +59,8 @@ The supporting implementation and evidence are recorded in:
 
 The exact local source identity is frozen in `configs/corpus-manifest.json`. The manifest records the SHA-256 hash, byte size, PDF page count, bibliographic identity, permitted pipeline role and extraction decision without storing copyrighted textbook text.
 
+Reusable enforcement is implemented in `src/geotech_rag/corpus_manifest.py`. Eight automated tests verify manifest structure, source integrity, parser version, fixed repository boundaries, leakage-prevention policies and the real local 770-page source.
+
 ## Hard-20 question identifiers
 
 The focused benchmark contains:

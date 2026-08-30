@@ -4,7 +4,7 @@
 
 - **Status:** Accepted for initial implementation, subject to the verification gates defined below
 - **Date:** 2026-07-27
-- **Last reviewed:** 2026-08-29
+- **Last reviewed:** 2026-08-30
 - **Scope:** Baseline reconstruction, model comparison and parameter-sensitivity experiments
 - **Related document:** `docs/baseline-replication-audit.md`
 
@@ -260,7 +260,7 @@ The baseline paper does not report its dependency versions. Current maintained v
 | `pypdf` and `pdfplumber` | Provide alternative extraction outputs used by the parser audit | Retain as audit dependencies, but do not use for baseline corpus production |
 | Additional provider SDKs | Connect to non-OpenAI models | Defer until the comparison models and endpoints are selected |
 | Evaluation libraries | Statistical processing and result tables | Add later when the scoring procedure is frozen |
-| Testing libraries | Automated unit and integration tests | Add with the first reusable implementation module |
+| `pytest` | Automated unit and integration tests | Included with the first reusable module and locked at version `9.1.1` |
 
 ### Why direct FAISS was selected
 
@@ -283,30 +283,29 @@ This requires slightly more implementation code, but the additional code represe
 
 ## Remaining unresolved decisions
 
-The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. The source identity and these decisions are now frozen in `configs/corpus-manifest.json`. They must next be enforced by reusable validation and extraction code.
+The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. The source identity and these decisions are frozen in `configs/corpus-manifest.json`. Reusable validation now enforces the manifest, source fingerprint and fixed repository boundaries in `src/geotech_rag/corpus_manifest.py`. Production extraction code remains to be implemented.
 
 The following values remain unresolved before the baseline configuration can be frozen:
 
-1. automated validation of the local source identity against the versioned corpus manifest before extraction;
-2. production corpus-record and export schema;
-3. remaining table and page-reference preservation checks;
-4. text-normalisation rules beyond the validated edge trimming and structural exclusions;
-5. text-splitter separator and length function;
-6. handling of chunks that exceed the intended size;
-7. exact OpenAI embedding model;
-8. embedding normalisation;
-9. FAISS index type and similarity metric;
-10. retrieval depth `k`;
-11. exact baseline prompt transcription;
-12. handling of insufficient retrieved evidence;
-13. generator model identifiers and API endpoints;
-14. maximum response length;
-15. retry and error-handling rules;
-16. repeated-run strategy for nondeterministic outputs;
-17. evaluation rubric and scoring procedure;
-18. storage format for experiment results;
-19. selected models for the newer-model comparison;
-20. optional enhanced formula or unit-consistency extension.
+1. production corpus-record and export schema;
+2. remaining table and page-reference preservation checks;
+3. text-normalisation rules beyond the validated edge trimming and structural exclusions;
+4. text-splitter separator and length function;
+5. handling of chunks that exceed the intended size;
+6. exact OpenAI embedding model;
+7. embedding normalisation;
+8. FAISS index type and similarity metric;
+9. retrieval depth `k`;
+10. exact baseline prompt transcription;
+11. handling of insufficient retrieved evidence;
+12. generator model identifiers and API endpoints;
+13. maximum response length;
+14. retry and error-handling rules;
+15. repeated-run strategy for nondeterministic outputs;
+16. evaluation rubric and scoring procedure;
+17. storage format for experiment results;
+18. selected models for the newer-model comparison;
+19. optional enhanced formula or unit-consistency extension.
 
 Each item must receive its own evidence-based decision or be grouped with technically related items.
 
@@ -405,7 +404,7 @@ The architecture will be accepted for experiments only after the following check
 13. frozen baseline configuration;
 14. Git checkpoint containing the verified implementation and documentation.
 
-The parser and layout notebooks provide the initial evidence required for extraction-quality gate 8. The gate remains open until the audited logic is transferred into reusable `src/` code, tested automatically and used to produce a validated interim corpus.
+The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified by eight automated tests, including one integration test against the local 770-page source. Extraction-quality gate 8 remains open until the positioned extraction logic is transferred from the notebook into reusable code, tested automatically and used to produce a validated interim corpus.
 
 A successful package installation alone will not be treated as proof that the RAG system works correctly.
 

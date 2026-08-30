@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+minversion = "9.0"
+addopts = [
+    "-ra",
+    "--strict-config",
+    "--strict-markers",
+]
+pythonpath = ["src"]
+testpaths = ["tests"]
