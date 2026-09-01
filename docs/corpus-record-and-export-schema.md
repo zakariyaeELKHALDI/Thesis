@@ -34,6 +34,13 @@ The production record-unit audit produced the following fixed results:
 | Invalid line-to-region references | 0 |
 | Page-text reconstruction mismatches | 0 |
 | Duplicate candidate record keys | 0 |
+| Positioned lines before publisher-label removal | 40,370 |
+| Line-sequence mismatches after adding orientation metadata | 0 |
+| Publisher copyright lines identified | 436 |
+| Pages containing publisher copyright lines | 355 |
+| Positioned lines after publisher-label removal | 39,934 |
+| Characters after publisher-label removal | 843,350 |
+| Pages emptied by publisher-label removal | 0 |
 | Positioned lines checked | 40,370 |
 | Strict geometry tolerance | 0.000001 points |
 | Line-region comparison tolerance | 0.005001 points |
@@ -43,6 +50,8 @@ The production record-unit audit produced the following fixed results:
 Heading bounding boxes are deterministically rounded to two decimal places, while positioned-line bounding boxes retain full parser precision. The line-region comparison tolerance is therefore derived as the maximum two-decimal rounding difference of `0.005` points plus the strict geometric tolerance of `0.000001` points. This validation tolerance does not change or enlarge extraction regions.
 
 The six empty retained regions occur on PDF pages 87, 144, 370, 445, 509 and 727. They contained only structural text after the geometric exclusions were applied. They must remain represented in the page audit but must not become retrieval records.
+
+A focused table audit additionally covered ordinary, continued, rotated, dense and side-by-side tables. Required table captions, continuation markers, figure references, equation references and page relationships remained present. Re-extraction with orientation metadata reproduced all 40,370 pre-removal positioned lines without changing their text, order, bounding boxes or provenance.
 
 ## Record-unit decision
 
@@ -128,10 +137,24 @@ Each object in `lines` must contain:
 | `block_number` | integer | PyMuPDF source block number                           |
 | `line_number`  | integer | Line number within its source block                   |
 | `span_count`   | integer | Number of source spans joined to reconstruct the line |
+| `direction` | array | Two-number PyMuPDF writing-direction vector `[dx, dy]` |
+| `writing_mode` | integer | PyMuPDF writing-mode value |
 
 `line_index` must be contiguous from zero. The region-level `text` must equal the line texts joined in order with exactly one newline character.
 
+The two `direction` values must be finite numbers and must be serialised without coordinate rounding. The current source uses writing mode zero throughout, but `writing_mode` remains required so that the exported record preserves the parser's complete orientation contract.
+
 The existing line-level `region_index` is not repeated inside the exported line object because the parent region record already provides it. Removing the duplicate prevents conflicting region identifiers.
+
+## Table and page-reference preservation
+
+The baseline preserves tables as ordered positioned lines with text, bounding boxes, writing direction, writing mode and page provenance. It does not reconstruct semantic rows, columns, merged cells or table relationships that are not explicitly provided by the selected extraction method.
+
+The focused audit verified required markers on seven representative PDF pages covering ordinary, continued, rotated, dense and side-by-side tables. All selected table captions, continuation markers, figure references and equation references remained present.
+
+PyMuPDF's automatic table detector found no table on six of the seven representative pages and returned only a 1-by-2 structure on the remaining page. Its output is therefore not accepted as a reliable table reconstruction for this source.
+
+The optional `pymupdf_layout` extension is not part of the reconstructed baseline. Introducing it would change the extraction method and requires a separate comparative audit. It may be evaluated later as an enhanced method if retrieval results show that semantic table reconstruction is necessary.
 
 ## Page-audit record
 
@@ -168,9 +191,9 @@ The permitted `page_state` values are:
 - `fully_excluded`; and
 - `outside_knowledge_scope`.
 
-Each removed structural-line object must contain `text`, `bbox`, `region_index`, `block_number`, `line_number`, `span_count` and `removal_reason`.
+Each removed structural-line object must contain `text`, `bbox`, `region_index`, `block_number`, `line_number`, `span_count`, `direction`, `writing_mode` and `removal_reason`.
 
-The permitted removal reasons are `remove_running_header` and `remove_bottom_page_number`.
+The permitted removal reasons are `remove_running_header`, `remove_bottom_page_number` and `remove_publisher_copyright`.
 
 A page with no emitted retrieval record remains present in this audit file. The audit export must never be used as retrieval input.
 
@@ -191,7 +214,8 @@ A page with no emitted retrieval record remains present in this audit file. The 
 | `record_schema_version` | string | Region-record schema version |
 | `page_audit_schema_version` | string | Page-audit schema version |
 | `page_state_counts` | object | Counts for all four page states |
-| `structural_removal_counts` | object | Counts for both removal reasons |
+| `structural_removal_counts` | object | Counts for all three removal reasons |
+| `line_orientation_counts` | array | Ordered direction, writing-mode and line-count records |
 | `retrieval_record_count` | integer | Number of emitted region records |
 | `retrieval_line_count` | integer | Total retained positioned lines |
 | `retrieval_character_count` | integer | Total retained characters |
@@ -201,7 +225,9 @@ A page with no emitted retrieval record remains present in this audit file. The 
 | `page_audit_relative_path` | string | Repository-relative page-audit path |
 | `page_audit_sha256` | string | SHA-256 of the completed page-audit export |
 
-For the frozen source, `retrieval_record_count` must equal `670`, `retrieval_line_count` must equal `40370` and `empty_retained_region_pdf_pages` must equal `[87, 144, 370, 445, 509, 727]`.
+Each object in `line_orientation_counts` must contain `direction`, `writing_mode` and `line_count`. Records must be ordered by the first direction value, the second direction value and then writing mode. Their `line_count` values must sum to `retrieval_line_count`.
+
+For the frozen source, `retrieval_record_count` must equal `670`, `retrieval_line_count` must equal `39934`, `retrieval_character_count` must equal `843350` and `empty_retained_region_pdf_pages` must equal `[87, 144, 370, 445, 509, 727]`.
 
 The summary must not contain a generation timestamp because that would make otherwise identical exports differ between runs. The summary cannot contain its own fingerprint because that would create a self-referential value.
 
@@ -210,8 +236,8 @@ The summary must not contain a generation timestamp because that would make othe
 The baseline export must:
 
 1. remove only ordinary edge whitespace through `trim_text_edges`;
-2. remove only the validated running headers and printed page numbers;
-3. preserve line order;
+2. remove only the validated running headers, printed page numbers and the exact publisher line `© Cengage Learning 2014`;
+3. preserve line order, bounding boxes, writing direction and writing mode;
 4. join spans without inserting artificial characters;
 5. preserve unusual formula control characters;
 6. perform no Unicode normalisation;
@@ -246,6 +272,10 @@ Production extraction must fail if any of the following occurs:
 * a region lies outside its physical page;
 * a retained line refers to a missing region;
 * a line bounding box lies outside its retained region by more than the derived `0.005001`-point line-region tolerance;
+* a line direction is not an array of two finite numbers;
+* a line writing mode is not an integer;
+* the line-orientation counts do not sum to the retrieval line count;
+* the exact publisher line `© Cengage Learning 2014` remains in retrieval text;
 * a region identifier is duplicated;
 * region text differs from its ordered line reconstruction;
 * a retrieval record is empty;

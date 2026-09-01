@@ -258,6 +258,7 @@ The baseline paper does not report its dependency versions. Current maintained v
 | `langchain-community` | Provides older community wrappers, including a FAISS wrapper | Exclude because it is archived and direct FAISS gives clearer control |
 | `pymupdf` | Provides positioned textbook extraction, page geometry and glyph-level diagnostics | Include as the production extractor; selected after the comparative parser audit |
 | `pypdf` and `pdfplumber` | Provide alternative extraction outputs used by the parser audit | Retain as audit dependencies, but do not use for baseline corpus production |
+| `pymupdf_layout` | Optional enhanced page-layout and table reconstruction | Exclude from the baseline; evaluate separately only if retrieval results justify an enhanced table method |
 | Additional provider SDKs | Connect to non-OpenAI models | Defer until the comparison models and endpoints are selected |
 | Evaluation libraries | Statistical processing and result tables | Add later when the scoring procedure is frozen |
 | `pytest` | Automated unit and integration tests | Included with the first reusable module and locked at version `9.1.1` |
@@ -283,28 +284,31 @@ This requires slightly more implementation code, but the additional code represe
 
 ## Remaining unresolved decisions
 
-The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. The source identity and these decisions are frozen in `configs/corpus-manifest.json`. Reusable validation now enforces the manifest, source fingerprint and fixed repository boundaries in `src/geotech_rag/corpus_manifest.py`. The production region-record unit, page-audit contract and deterministic export summary are now frozen in `docs/corpus-record-and-export-schema.md`, based on the completed notebook audits. Production extraction code remains to be implemented.
+The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. The source identity and these decisions are frozen in `configs/corpus-manifest.json`. Reusable validation now enforces the manifest, source fingerprint and fixed repository boundaries in `src/geotech_rag/corpus_manifest.py`. The production region-record unit, page-audit contract and deterministic export summary are now frozen in `docs/corpus-record-and-export-schema.md`, based on the completed notebook audits.
+
+The focused table audit confirms preservation of required captions, continuation markers and page references but does not support semantic row-and-column reconstruction. The baseline will therefore export ordered positioned lines with bounding boxes, writing direction and writing mode. It will also remove only the exact repeated publisher label identified by the full-corpus audit.
+
+Production extraction code remains to be implemented.
 
 The following values remain unresolved before the baseline configuration can be frozen:
 
-1. remaining table and page-reference preservation checks;
-2. text-normalisation rules beyond the validated edge trimming and structural exclusions;
-3. text-splitter separator and length function;
-4. handling of chunks that exceed the intended size;
-5. exact OpenAI embedding model;
-6. embedding normalisation;
-7. FAISS index type and similarity metric;
-8. retrieval depth `k`;
-9. exact baseline prompt transcription;
-10. handling of insufficient retrieved evidence;
-11. generator model identifiers and API endpoints;
-12. maximum response length;
-13. retry and error-handling rules;
-14. repeated-run strategy for nondeterministic outputs;
-15. evaluation rubric and scoring procedure;
-16. storage format for experiment results;
-17. selected models for the newer-model comparison;
-18. optional enhanced formula or unit-consistency extension.
+1. text-normalisation rules beyond the validated edge trimming and structural exclusions;
+2. text-splitter separator and length function;
+3. handling of chunks that exceed the intended size;
+4. exact OpenAI embedding model;
+5. embedding normalisation;
+6. FAISS index type and similarity metric;
+7. retrieval depth `k`;
+8. exact baseline prompt transcription;
+9. handling of insufficient retrieved evidence;
+10. generator model identifiers and API endpoints;
+11. maximum response length;
+12. retry and error-handling rules;
+13. repeated-run strategy for nondeterministic outputs;
+14. evaluation rubric and scoring procedure;
+15. storage format for experiment results;
+16. selected models for the newer-model comparison;
+17. optional enhanced formula or unit-consistency extension.
 
 Each item must receive its own evidence-based decision or be grouped with technically related items.
 
@@ -403,7 +407,7 @@ The architecture will be accepted for experiments only after the following check
 13. frozen baseline configuration;
 14. Git checkpoint containing the verified implementation and documentation.
 
-The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified by eight automated tests, including one integration test against the local 770-page source. The production region-record unit and deterministic export contracts are frozen through the notebook evidence and `docs/corpus-record-and-export-schema.md`. Extraction-quality gate 8 remains open until the positioned extraction logic is transferred into reusable code, tested automatically and used to produce the three validated interim exports.
+The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified by eight automated tests, including one integration test against the local 770-page source. The production region-record unit, table-preservation boundary, writing-orientation metadata and deterministic export contracts are frozen through the notebook evidence and `docs/corpus-record-and-export-schema.md`. Extraction-quality gate 8 remains open until the positioned extraction logic is transferred into reusable code, tested automatically and used to produce the three validated interim exports.
 
 A successful package installation alone will not be treated as proof that the RAG system works correctly.
 

@@ -61,7 +61,9 @@ The exact local source identity is frozen in `configs/corpus-manifest.json`. The
 
 Reusable enforcement is implemented in `src/geotech_rag/corpus_manifest.py`. Eight automated tests verify manifest structure, source integrity, parser version, fixed repository boundaries, leakage-prevention policies and the real local 770-page source.
 
-The production record unit and deterministic export contracts are frozen in `docs/corpus-record-and-export-schema.md`. Notebook audits verify 670 non-empty retrieval-region records, complete reconstruction of cleaned page text, unique region identifiers and valid coordinates for all 40,370 retained positioned lines.
+The production record unit and deterministic export contracts are frozen in `docs/corpus-record-and-export-schema.md`. Notebook audits verify 670 non-empty retrieval-region records, complete reconstruction of cleaned page text, unique region identifiers and valid coordinates for all 40,370 positioned lines present before the final publisher-label exclusion.
+
+The focused table and page-reference audit covers ordinary, continued, rotated, dense and side-by-side tables. It preserves the required captions and cross-references while documenting that the baseline does not reconstruct semantic table cells. Full-corpus re-extraction also verifies writing-direction provenance without changing any existing line. The exact publisher label occurs 436 times across 355 pages; its removal leaves 39,934 positioned lines, 843,350 characters and all 670 non-empty pages.
 
 ## Hard-20 question identifiers
 
