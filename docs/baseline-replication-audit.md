@@ -61,6 +61,8 @@ The exact local source identity is frozen in `configs/corpus-manifest.json`. The
 
 Reusable enforcement is implemented in `src/geotech_rag/corpus_manifest.py`. Eight automated tests verify manifest structure, source integrity, parser version, fixed repository boundaries, leakage-prevention policies and the real local 770-page source.
 
+The production record unit and deterministic export contracts are frozen in `docs/corpus-record-and-export-schema.md`. Notebook audits verify 670 non-empty retrieval-region records, complete reconstruction of cleaned page text, unique region identifiers and valid coordinates for all 40,370 retained positioned lines.
+
 ## Hard-20 question identifiers
 
 The focused benchmark contains:

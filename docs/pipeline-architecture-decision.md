@@ -4,9 +4,9 @@
 
 - **Status:** Accepted for initial implementation, subject to the verification gates defined below
 - **Date:** 2026-07-27
-- **Last reviewed:** 2026-08-30
+- **Last reviewed:** 2026-09-01
 - **Scope:** Baseline reconstruction, model comparison and parameter-sensitivity experiments
-- **Related document:** `docs/baseline-replication-audit.md`
+- **Related documents:** `docs/baseline-replication-audit.md`; `docs/corpus-record-and-export-schema.md`
 
 ## Purpose
 
@@ -283,29 +283,28 @@ This requires slightly more implementation code, but the additional code represe
 
 ## Remaining unresolved decisions
 
-The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. The source identity and these decisions are frozen in `configs/corpus-manifest.json`. Reusable validation now enforces the manifest, source fingerprint and fixed repository boundaries in `src/geotech_rag/corpus_manifest.py`. Production extraction code remains to be implemented.
+The authorised source has been identified as Das and Sobhan (2014), *Principles of Geotechnical Engineering*, 8th SI edition. Positioned PyMuPDF has also been selected as the production extraction method. The source identity and these decisions are frozen in `configs/corpus-manifest.json`. Reusable validation now enforces the manifest, source fingerprint and fixed repository boundaries in `src/geotech_rag/corpus_manifest.py`. The production region-record unit, page-audit contract and deterministic export summary are now frozen in `docs/corpus-record-and-export-schema.md`, based on the completed notebook audits. Production extraction code remains to be implemented.
 
 The following values remain unresolved before the baseline configuration can be frozen:
 
-1. production corpus-record and export schema;
-2. remaining table and page-reference preservation checks;
-3. text-normalisation rules beyond the validated edge trimming and structural exclusions;
-4. text-splitter separator and length function;
-5. handling of chunks that exceed the intended size;
-6. exact OpenAI embedding model;
-7. embedding normalisation;
-8. FAISS index type and similarity metric;
-9. retrieval depth `k`;
-10. exact baseline prompt transcription;
-11. handling of insufficient retrieved evidence;
-12. generator model identifiers and API endpoints;
-13. maximum response length;
-14. retry and error-handling rules;
-15. repeated-run strategy for nondeterministic outputs;
-16. evaluation rubric and scoring procedure;
-17. storage format for experiment results;
-18. selected models for the newer-model comparison;
-19. optional enhanced formula or unit-consistency extension.
+1. remaining table and page-reference preservation checks;
+2. text-normalisation rules beyond the validated edge trimming and structural exclusions;
+3. text-splitter separator and length function;
+4. handling of chunks that exceed the intended size;
+5. exact OpenAI embedding model;
+6. embedding normalisation;
+7. FAISS index type and similarity metric;
+8. retrieval depth `k`;
+9. exact baseline prompt transcription;
+10. handling of insufficient retrieved evidence;
+11. generator model identifiers and API endpoints;
+12. maximum response length;
+13. retry and error-handling rules;
+14. repeated-run strategy for nondeterministic outputs;
+15. evaluation rubric and scoring procedure;
+16. storage format for experiment results;
+17. selected models for the newer-model comparison;
+18. optional enhanced formula or unit-consistency extension.
 
 Each item must receive its own evidence-based decision or be grouped with technically related items.
 
@@ -404,7 +403,7 @@ The architecture will be accepted for experiments only after the following check
 13. frozen baseline configuration;
 14. Git checkpoint containing the verified implementation and documentation.
 
-The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified by eight automated tests, including one integration test against the local 770-page source. Extraction-quality gate 8 remains open until the positioned extraction logic is transferred from the notebook into reusable code, tested automatically and used to produce a validated interim corpus.
+The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified by eight automated tests, including one integration test against the local 770-page source. The production region-record unit and deterministic export contracts are frozen through the notebook evidence and `docs/corpus-record-and-export-schema.md`. Extraction-quality gate 8 remains open until the positioned extraction logic is transferred into reusable code, tested automatically and used to produce the three validated interim exports.
 
 A successful package installation alone will not be treated as proof that the RAG system works correctly.
 
