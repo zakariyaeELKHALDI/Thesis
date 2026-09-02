@@ -288,7 +288,7 @@ The authorised source has been identified as Das and Sobhan (2014), *Principles 
 
 The focused table audit confirms preservation of required captions, continuation markers and page references but does not support semantic row-and-column reconstruction. The baseline will therefore export ordered positioned lines with bounding boxes, writing direction and writing mode. It will also remove only the exact repeated publisher label identified by the full-corpus audit.
 
-Production extraction code remains to be implemented.
+The production extraction and deterministic export chain is now implemented, tested against the validated source and verified through byte-for-byte export regeneration.
 
 The following values remain unresolved before the baseline configuration can be frozen:
 
