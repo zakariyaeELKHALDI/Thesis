@@ -4,7 +4,7 @@
 
 - **Status:** Accepted for initial implementation, subject to the verification gates defined below
 - **Date:** 2026-07-27
-- **Last reviewed:** 2026-09-01
+- **Last reviewed:** 2026-09-02
 - **Scope:** Baseline reconstruction, model comparison and parameter-sensitivity experiments
 - **Related documents:** `docs/baseline-replication-audit.md`; `docs/corpus-record-and-export-schema.md`
 
@@ -407,7 +407,7 @@ The architecture will be accepted for experiments only after the following check
 13. frozen baseline configuration;
 14. Git checkpoint containing the verified implementation and documentation.
 
-The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified by eight automated tests, including one integration test against the local 770-page source. The production region-record unit, table-preservation boundary, writing-orientation metadata and deterministic export contracts are frozen through the notebook evidence and `docs/corpus-record-and-export-schema.md`. Extraction-quality gate 8 remains open until the positioned extraction logic is transferred into reusable code, tested automatically and used to produce the three validated interim exports.
+The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified against the local 770-page source. The complete production chain is now implemented in reusable geometry, boundary, positioned-extraction and deterministic-export modules. The 33-test automated suite includes real-source integration checks and reproduces the frozen totals of 670 retrieval records, 770 page audits, 39,934 positioned lines and 843,350 characters. The production run created all three manifest-authorised interim exports, an independent audit verified their contents and fingerprints, and a controlled regeneration reproduced all three files byte for byte. Extraction-quality gate 8 is therefore satisfied. The copyrighted derived exports remain excluded from Git.
 
 A successful package installation alone will not be treated as proof that the RAG system works correctly.
 
