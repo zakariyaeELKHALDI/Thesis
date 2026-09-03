@@ -1,0 +1,42 @@
+{
+  "chunking_config_schema_version": "1.0",
+  "expected_source_specific_audit": {
+    "adjacent_chunk_pair_count": 4443,
+    "chunk_count": 5113,
+    "chunk_projection_sha256": "b72dcd0ef4bc7c23edbcd976630b195bf926291debc3517f3596039f68f30021",
+    "chunks_with_formula_controls": 2119,
+    "maximum_chunk_character_count": 200,
+    "maximum_chunks_per_parent_record": 24,
+    "oversized_chunk_count": 0,
+    "single_chunk_parent_record_count": 17,
+    "total_chunk_character_count": 848290
+  },
+  "input": {
+    "character_count": 843350,
+    "line_count": 39934,
+    "record_count": 670,
+    "record_schema_version": "1.0",
+    "relative_path": "data/interim/corpus/regions.jsonl",
+    "sha256": "0bb7225c7f403d7c15fdaac2a58cc5a847d414dc48ce11668a2eaecde1cbb03a"
+  },
+  "output": {
+    "chunk_schema_version": "1.0",
+    "chunks_relative_path": "data/processed/corpus/chunks.jsonl",
+    "summary_relative_path": "data/processed/audit/chunking-summary.json",
+    "summary_schema_version": "1.0"
+  },
+  "oversized_chunk_policy": "error",
+  "splitter": {
+    "add_start_index": true,
+    "chunk_overlap": 10,
+    "chunk_size": 200,
+    "class_name": "CharacterTextSplitter",
+    "is_separator_regex": false,
+    "keep_separator": false,
+    "length_function": "len",
+    "package": "langchain-text-splitters",
+    "package_version": "1.1.2",
+    "separator": "\n",
+    "strip_whitespace": false
+  }
+}

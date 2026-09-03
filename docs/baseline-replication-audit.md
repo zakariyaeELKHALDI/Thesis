@@ -67,6 +67,12 @@ The focused table and page-reference audit covers ordinary, continued, rotated, 
 
 Seven export tests verify schema conversion, coordinate and leakage failures, deterministic UTF-8 serialisation, control-character round trips and integration against the validated local source. The complete automated suite now contains 33 passing tests. The production run emitted 670 retrieval records and 770 page-audit records, and a controlled overwrite reproduced all three export files byte for byte. The derived files remain excluded from Git because they contain copyrighted source text.
 
+## Completed chunking decision
+
+Tophel et al. (2025) report `CharacterTextSplitter`, a chunk size of `200` and overlap of `10`, but do not report the separator or length function. A controlled audit compared the installed double-newline default, a single-newline positioned-line boundary and a strict character boundary against the exact production region export. The installed default left all 670 page regions unsplit and produced 653 outputs above 200 characters. Strict character splitting respected the limit but could divide words, formulas and table values.
+
+The reconstructed baseline therefore uses a single-newline separator with Python `len`, `keep_separator=False`, `strip_whitespace=False` and the reported size and overlap values. It produced 5,113 chunks with a maximum length of 200. Complete positioned lines remain atomic, while disabling whitespace stripping preserves three formula control characters that the installed default removed at chunk boundaries. The ten-character overlap is best-effort because the splitter retains only complete lines that fit the allowance; it must not be described as an exact ten-character overlap for every pair. The full decision and schema are frozen in `docs/corpus-chunking-decision-and-schema.md`, and machine-readable settings are stored in `configs/chunking-config.json`.
+
 ## Hard-20 question identifiers
 
 The focused benchmark contains:

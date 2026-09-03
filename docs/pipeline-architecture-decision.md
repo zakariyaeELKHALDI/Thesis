@@ -4,7 +4,7 @@
 
 - **Status:** Accepted for initial implementation, subject to the verification gates defined below
 - **Date:** 2026-07-27
-- **Last reviewed:** 2026-09-02
+- **Last reviewed:** 2026-09-03
 - **Scope:** Baseline reconstruction, model comparison and parameter-sensitivity experiments
 - **Related documents:** `docs/baseline-replication-audit.md`; `docs/corpus-record-and-export-schema.md`
 
@@ -29,6 +29,7 @@ This decision must be recorded before installing the main RAG dependencies so th
 | Decision | Classification | Reason |
 |---|---|---|
 | Use `CharacterTextSplitter` with chunk size `200` and overlap `10` in the reconstructed baseline | Direct replication | These details are explicitly reported in Table 2 of Tophel et al. (2025) |
+| Use a single-newline separator, Python `len` and a fail-on-oversize policy | Reconstructed baseline decision | The paper does not report these values; the corpus audit selected complete positioned lines without producing chunks above 200 characters |
 | Use OpenAI embeddings and FAISS in the reconstructed baseline | Direct replication at component level | Both components are reported, but their exact configurations are not |
 | Build one explicit modular RAG pipeline | Reconstructed baseline decision | The paper reports a conversational retrieval chain but does not identify its exact class or internal implementation |
 | Use current component-specific LangChain packages | Practical adjustment | The LangChain package structure has changed since the baseline implementation |
@@ -290,25 +291,24 @@ The focused table audit confirms preservation of required captions, continuation
 
 The production extraction and deterministic export chain is now implemented, tested against the validated source and verified through byte-for-byte export regeneration.
 
-The following values remain unresolved before the baseline configuration can be frozen:
+The chunking audit has now resolved the first three previously open items. The baseline performs no additional text normalisation, uses the frozen single-newline `CharacterTextSplitter` configuration in `configs/chunking-config.json` and stops if any resulting chunk exceeds 200 characters. The evidence, alternatives, overlap interpretation and chunk-record contract are recorded in `docs/corpus-chunking-decision-and-schema.md`.
 
-1. text-normalisation rules beyond the validated edge trimming and structural exclusions;
-2. text-splitter separator and length function;
-3. handling of chunks that exceed the intended size;
-4. exact OpenAI embedding model;
-5. embedding normalisation;
-6. FAISS index type and similarity metric;
-7. retrieval depth `k`;
-8. exact baseline prompt transcription;
-9. handling of insufficient retrieved evidence;
-10. generator model identifiers and API endpoints;
-11. maximum response length;
-12. retry and error-handling rules;
-13. repeated-run strategy for nondeterministic outputs;
-14. evaluation rubric and scoring procedure;
-15. storage format for experiment results;
-16. selected models for the newer-model comparison;
-17. optional enhanced formula or unit-consistency extension.
+The following values remain unresolved before the complete baseline configuration can be frozen:
+
+1. exact OpenAI embedding model;
+2. embedding normalisation;
+3. FAISS index type and similarity metric;
+4. retrieval depth `k`;
+5. exact baseline prompt transcription;
+6. handling of insufficient retrieved evidence;
+7. generator model identifiers and API endpoints;
+8. maximum response length;
+9. retry and error-handling rules;
+10. repeated-run strategy for nondeterministic outputs;
+11. evaluation rubric and scoring procedure;
+12. storage format for experiment results;
+13. selected models for the newer-model comparison;
+14. optional enhanced formula or unit-consistency extension.
 
 Each item must receive its own evidence-based decision or be grouped with technically related items.
 

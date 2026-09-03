@@ -40,6 +40,10 @@ data/raw/ground_truth/*
 data/interim/*
 !data/interim/.gitkeep
 
+# Processed corpus chunks
+data/processed/*
+!data/processed/.gitkeep
+
 # Generated vector indexes
 artifacts/faiss/*
 !artifacts/faiss/.gitkeep

@@ -14,7 +14,7 @@
 
 This document defines the boundary between textbook extraction and later text chunking. It specifies which extracted content may become retrieval input, how its provenance must be preserved and how the resulting records must be exported.
 
-The region records defined here are extraction records, not final embedding chunks. The later chunking stage may split their `text`, but every chunk must retain its parent record identifier and source-page provenance.
+The region records defined here are extraction records, not final embedding chunks. The later chunking stage may split their `text`, but every chunk must retain its parent record identifier and source-page provenance. The downstream chunking decision, machine-readable configuration and chunk-record fields are defined in `docs/corpus-chunking-decision-and-schema.md` and `configs/chunking-config.json`.
 
 ## Evidence from the audited source
 
