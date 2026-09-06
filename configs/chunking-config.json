@@ -1,15 +1,15 @@
 {
-  "chunking_config_schema_version": "1.0",
+  "chunking_config_schema_version": "1.1",
   "expected_source_specific_audit": {
     "adjacent_chunk_pair_count": 4443,
     "chunk_count": 5113,
-    "chunk_projection_sha256": "b72dcd0ef4bc7c23edbcd976630b195bf926291debc3517f3596039f68f30021",
+    "chunk_projection_sha256": "88aca7a9a60c21713f3e6d732cb17f6380776d1c2f0c06157f3414c018f09c4b",
     "chunks_with_formula_controls": 2119,
     "maximum_chunk_character_count": 200,
     "maximum_chunks_per_parent_record": 24,
     "oversized_chunk_count": 0,
     "single_chunk_parent_record_count": 17,
-    "total_chunk_character_count": 848290
+    "total_chunk_character_count": 848280
   },
   "input": {
     "character_count": 843350,
@@ -31,11 +31,13 @@
     "chunk_overlap": 10,
     "chunk_size": 200,
     "class_name": "CharacterTextSplitter",
+    "embedded_line_newline_sentinel": "U+E000",
     "is_separator_regex": false,
     "keep_separator": false,
     "length_function": "len",
     "package": "langchain-text-splitters",
     "package_version": "1.1.2",
+    "protect_embedded_line_newlines": true,
     "separator": "\n",
     "strip_whitespace": false
   }

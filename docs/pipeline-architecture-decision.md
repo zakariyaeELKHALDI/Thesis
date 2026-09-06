@@ -4,7 +4,7 @@
 
 - **Status:** Accepted for initial implementation, subject to the verification gates defined below
 - **Date:** 2026-07-27
-- **Last reviewed:** 2026-09-03
+- **Last reviewed:** 2026-09-06
 - **Scope:** Baseline reconstruction, model comparison and parameter-sensitivity experiments
 - **Related documents:** `docs/baseline-replication-audit.md`; `docs/corpus-record-and-export-schema.md`
 
@@ -30,6 +30,7 @@ This decision must be recorded before installing the main RAG dependencies so th
 |---|---|---|
 | Use `CharacterTextSplitter` with chunk size `200` and overlap `10` in the reconstructed baseline | Direct replication | These details are explicitly reported in Table 2 of Tophel et al. (2025) |
 | Use a single-newline separator, Python `len` and a fail-on-oversize policy | Reconstructed baseline decision | The paper does not report these values; the corpus audit selected complete positioned lines without producing chunks above 200 characters |
+| Temporarily protect embedded line `U+000A` values and restore them before output | Provenance-preservation decision | The real-source audit found that raw separator handling cut through positioned lines in five parents; one-character protection removes the ambiguity without changing source text or offsets |
 | Use OpenAI embeddings and FAISS in the reconstructed baseline | Direct replication at component level | Both components are reported, but their exact configurations are not |
 | Build one explicit modular RAG pipeline | Reconstructed baseline decision | The paper reports a conversational retrieval chain but does not identify its exact class or internal implementation |
 | Use current component-specific LangChain packages | Practical adjustment | The LangChain package structure has changed since the baseline implementation |
@@ -180,7 +181,7 @@ The repository separates source documents, benchmark inputs, reference answers a
 
 | Path | Role | Permitted pipeline use |
 |---|---|---|
-| `data/raw/corpus/` | Authorised textbook source files | The only raw-data directory permitted as input to source ingestion, extraction, chunking, corpus embedding and FAISS index construction |
+| `data/raw/corpus/` | Authorised textbook source files | The only raw-data directory permitted as input to source ingestion and extraction; only its validated derived records may enter chunking, corpus embedding and FAISS index construction |
 | `data/raw/evaluation/questions/` | Wider question bank and focused Hard-20 benchmark questions | May be loaded only as runtime evaluation queries after index construction; must never be treated as corpus documents or stored in the FAISS index |
 | `data/raw/ground_truth/` | Official solution-manual reference answers | May be accessed only by the separate evaluation stage after an answer has been generated; must never enter retrieval or generation |
 | `results/runs/` | Generated answers, retrieved-chunk records, configurations, timings and provenance | Output location only; previous run artefacts must not become inputs to the same controlled benchmark |
@@ -291,7 +292,7 @@ The focused table audit confirms preservation of required captions, continuation
 
 The production extraction and deterministic export chain is now implemented, tested against the validated source and verified through byte-for-byte export regeneration.
 
-The chunking audit has now resolved the first three previously open items. The baseline performs no additional text normalisation, uses the frozen single-newline `CharacterTextSplitter` configuration in `configs/chunking-config.json` and stops if any resulting chunk exceeds 200 characters. The evidence, alternatives, overlap interpretation and chunk-record contract are recorded in `docs/corpus-chunking-decision-and-schema.md`.
+The chunking audit and implementation have now resolved the first three previously open items. The baseline performs no additional text normalisation, uses the frozen single-newline `CharacterTextSplitter` configuration in `configs/chunking-config.json` and stops if any resulting chunk exceeds 200 characters. Embedded `U+000A` values inside positioned lines are temporarily protected and restored so they cannot be mistaken for structural separators. The production run emitted 5,113 chunks with complete line and page provenance, and controlled regeneration reproduced both output files byte for byte. The evidence, alternatives, overlap interpretation, embedded-control correction and chunk-record contract are recorded in `docs/corpus-chunking-decision-and-schema.md`.
 
 The following values remain unresolved before the complete baseline configuration can be frozen:
 
@@ -407,7 +408,9 @@ The architecture will be accepted for experiments only after the following check
 13. frozen baseline configuration;
 14. Git checkpoint containing the verified implementation and documentation.
 
-The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified against the local 770-page source. The complete production chain is now implemented in reusable geometry, boundary, positioned-extraction and deterministic-export modules. The 33-test automated suite includes real-source integration checks and reproduces the frozen totals of 670 retrieval records, 770 page audits, 39,934 positioned lines and 843,350 characters. The production run created all three manifest-authorised interim exports, an independent audit verified their contents and fingerprints, and a controlled regeneration reproduced all three files byte for byte. Extraction-quality gate 8 is therefore satisfied. The copyrighted derived exports remain excluded from Git.
+The corpus-manifest boundary and source-integrity rules are implemented in `src/geotech_rag/corpus_manifest.py` and verified against the local 770-page source. The production extraction chain is implemented in reusable geometry, boundary, positioned-extraction and deterministic-export modules. Its real-source integration checks reproduce the frozen totals of 670 retrieval records, 770 page audits, 39,934 positioned lines and 843,350 characters. The production run created all three manifest-authorised interim exports, an independent audit verified their contents and fingerprints, and a controlled regeneration reproduced all three files byte for byte. Extraction-quality gate 8 is therefore satisfied.
+
+Chunking is implemented in `src/geotech_rag/corpus_chunking.py`. Nine focused tests verify splitter behaviour, identifiers, metadata, source fingerprints, line-boundary provenance, embedded-control preservation, deterministic output and overwrite protection. The complete 42-test suite passes. The independently audited production run emitted 5,113 chunks with zero line-boundary problems and zero leaked sentinels, and controlled regeneration reproduced both processed files byte for byte. Verification gates 3 and 6 are therefore satisfied. All copyrighted derived extraction and chunking outputs remain excluded from Git.
 
 A successful package installation alone will not be treated as proof that the RAG system works correctly.
 

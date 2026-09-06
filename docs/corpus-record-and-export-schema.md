@@ -2,7 +2,7 @@
 
 ## Decision status
 
-- **Status:** Accepted for initial implementation
+- **Status:** Implemented and verified
 - **Decision date:** 2026-09-01
 - **Record schema version:** `1.0`
 - **Page-audit schema version:** `1.0`
@@ -100,7 +100,7 @@ Under the manifest-pinned PyMuPDF 1.28.2 environment, the verified production ru
 | `data/interim/audit/pages.jsonl` | 770 | 964,974 | `1ae352f8e2a91c0f9345070359e5ca799b85153aec468190b06c53d736f9816e` |
 | `data/interim/audit/extraction-summary.json` | 1 | 12,875 | `ed6604ba2c020f08e6339c4e2c3cac6685a29c1742df66f83cd69cd7d473cea0` |
 
-An independent audit parsed and reconstructed both JSONL files, verified the summary fingerprints and all frozen counts, and found 137 writing-orientation groups. A controlled regeneration then reproduced all three SHA-256 values exactly, demonstrating byte-for-byte deterministic output. Seven export-specific tests pass, and the complete automated suite contains 33 passing tests.
+An independent audit parsed and reconstructed both JSONL files, verified the summary fingerprints and all frozen counts, and found 137 writing-orientation groups. A controlled regeneration then reproduced all three SHA-256 values exactly, demonstrating byte-for-byte deterministic output. Seven extraction-export-specific tests pass. Following the verified downstream chunking implementation, the complete automated suite contains 42 passing tests.
 
 ## Retrieval-region record
 

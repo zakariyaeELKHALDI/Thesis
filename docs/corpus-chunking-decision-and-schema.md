@@ -2,9 +2,10 @@
 
 ## Decision status
 
-- **Status:** Accepted for production implementation
+- **Status:** Implemented and verified for production use
 - **Decision date:** 2026-09-03
-- **Chunking-config schema version:** `1.0`
+- **Implementation verification date:** 2026-09-06
+- **Chunking-config schema version:** `1.1`
 - **Chunk-record schema version:** `1.0`
 - **Chunking-summary schema version:** `1.0`
 - **Configuration:** `configs/chunking-config.json`
@@ -32,6 +33,7 @@ The reconstructed baseline therefore preserves the three reported values and exp
 | Keep separator | `false` | Unreported installed default |
 | Add start index | `true` | Provenance extension; does not alter chunk text |
 | Strip whitespace | `false` | Preservation decision supported by the control-character audit |
+| Protect embedded line newlines | `true`, using temporary `U+E000` | Provenance protection required by the positioned-line audit |
 | Separator is regular expression | `false` | Unreported installed default |
 | Package version | `langchain-text-splitters 1.1.2` | Locked project environment |
 | Oversized-chunk policy | Stop with an error | Reconstructed validation rule |
@@ -50,7 +52,7 @@ The audit used the exact frozen 670-record region export with SHA-256 `0bb7225c7
 
 The installed double-newline default did not split any source record because the production extraction joins positioned lines with single newlines. It therefore failed to realise the reported 200-character intention on this corpus.
 
-Strict character splitting enforced the numerical size and overlap more mechanically, but it could cut through words, formula sequences and table values. The single-newline separator also produced no oversized chunks while preserving every positioned line as an atomic text unit. It was therefore selected as the most defensible separator reconstruction for the baseline.
+Strict character splitting enforced the numerical size and overlap more mechanically, but it could cut through words, formula sequences and table values. The single-newline candidate also produced no oversized chunks and best matched the positioned-line design. It was selected provisionally and then subjected to separate whitespace and embedded-control integrity audits before production use.
 
 ## Whitespace-preservation audit
 
@@ -61,7 +63,22 @@ The first separator comparison retained the installed `strip_whitespace=True` de
 | `strip_whitespace=True` | 5,113 | 848,283 | 2,118 | 3 | `77f85fc269745a0dd2eeab3404f2f03b128ba52f7c0e9978c2d1fa622234b784` |
 | `strip_whitespace=False` | 5,113 | 848,290 | 2,119 | 0 | `b72dcd0ef4bc7c23edbcd976630b195bf926291debc3517f3596039f68f30021` |
 
-Both settings produced a maximum chunk length of 200, no oversized chunks and chunk text found exactly in its parent record. Disabling stripping changes neither the number of chunks nor the reported size and overlap settings. It is therefore selected because it prevents the chunking stage from silently reversing the established text-preservation decision. This is recorded as a transparent reconstruction, since the paper does not report whitespace behaviour.
+Both settings produced a maximum chunk length of 200, no oversized chunks and chunk text found exactly in its parent record. Disabling stripping changes neither the number of chunks nor the reported size and overlap settings. It is therefore selected because it prevents the chunking stage from silently reversing the established text-preservation decision. This is recorded as a transparent reconstruction, since the paper does not report whitespace behaviour. The values in this table describe the provisional raw-newline candidate; the later positioned-line control audit changed five parent projections without reversing the whitespace decision.
+
+## Embedded-control boundary audit
+
+The first real-source integration run exposed a distinction that was not visible in the aggregate separator audit. Forty-three positioned-line records contain line-break control values inside their extracted line text: 33 contain `U+000A` and 10 contain `U+000D`. These values originate inside PyMuPDF line records and belong to the preserved mathematical-font evidence; they are not the structural newline inserted between two positioned lines.
+
+Using raw `U+000A` as the splitter separator therefore gave one character two meanings. Although every emitted chunk remained a valid parent substring, the raw candidate began inside a positioned line three times, ended inside a positioned line three times and affected five parent records. This contradicted the frozen requirement that positioned lines remain atomic.
+
+The production implementation protects only embedded `U+000A` values with one temporary private-use character, `U+E000`, before splitting. The source was checked to confirm that `U+E000` does not already occur. Because both values have length one, parent offsets remain unchanged. The original `U+000A` values are restored before validation, serialisation, embedding or any other downstream use. Embedded `U+000D` values remain unchanged because they are not the configured separator. This mechanism is structural protection rather than text normalisation or formula reconstruction.
+
+| Candidate | Chunks | Total emitted characters | Starts inside lines | Ends inside lines | Parents with boundary problems | Projection SHA-256 |
+|---|---:|---:|---:|---:|---:|---|
+| Raw single-newline splitting | 5,113 | 848,290 | 3 | 3 | 5 | `b72dcd0ef4bc7c23edbcd976630b195bf926291debc3517f3596039f68f30021` |
+| Positioned-line-aware protected splitting | 5,113 | 848,280 | 0 | 0 | 0 | `88aca7a9a60c21713f3e6d732cb17f6380776d1c2f0c06157f3414c018f09c4b` |
+
+The ten-character difference is caused by changed best-effort overlap formation around the five affected parents, not by deletion from the source records. The protected result retains all 39,934 positioned lines, preserves 2,119 chunks containing formula controls and emits no `U+E000` value. It is therefore the accepted production candidate.
 
 ## Overlap interpretation
 
@@ -87,6 +104,23 @@ Chunking produces two deterministic files:
 | `data/processed/audit/chunking-summary.json` | Input identity, configuration identity, totals and chunk-export fingerprint |
 
 These files may contain copyrighted textbook text and must remain excluded from Git. The summary is written last and must not contain a generation timestamp or its own fingerprint.
+
+The reusable implementation is provided by `src/geotech_rag/corpus_chunking.py`. The verified production command is:
+
+```bash
+PYTHONPATH=src python -m geotech_rag.corpus_chunking \
+    --config configs/chunking-config.json \
+    --project-root .
+```
+
+The production run generated:
+
+| Output | Records | Bytes | SHA-256 |
+|---|---:|---:|---|
+| `data/processed/corpus/chunks.jsonl` | 5,113 | 5,153,315 | `bce9702308a65b9e9ab3bcdb0781ad308d509b56904a95ec7bab4feffebca645` |
+| `data/processed/audit/chunking-summary.json` | 1 | 1,532 | `d31c5ed3a3adca6d4f4f839e404c6582ef4419b385ffc5e5b49d253ac21f96d5` |
+
+An independent audit parsed both input and output JSONL files without importing the production chunking module. It reconstructed every parent and chunk range, checked identifiers, metadata and bounding boxes, confirmed that all positioned lines were covered, found zero line-boundary problems and found zero leaked sentinels. A controlled overwrite reproduced both files byte for byte. Nine chunking-specific tests and the complete 42-test suite pass.
 
 ## Chunk-record contract
 
@@ -144,14 +178,17 @@ The selected candidate produced the following frozen audit values:
 | Parent positioned lines | 39,934 |
 | Parent characters | 843,350 |
 | Retrieval chunks | 5,113 |
-| Total emitted chunk characters, including overlap | 848,290 |
+| Total emitted chunk characters, including overlap | 848,280 |
 | Single-chunk parent records | 17 |
 | Maximum chunks from one parent | 24 |
 | Maximum chunk characters | 200 |
 | Chunks over 200 characters | 0 |
 | Chunks containing preserved formula controls | 2,119 |
+| Positioned-line boundary problems | 0 |
+| Positioned lines absent from all chunks | 0 |
+| Leaked temporary `U+E000` sentinels | 0 |
 
-The ordered audit projection of `parent_record_id`, `chunk_index` and `text` has SHA-256 `b72dcd0ef4bc7c23edbcd976630b195bf926291debc3517f3596039f68f30021`.
+The ordered audit projection of `parent_record_id`, `chunk_index` and `text` has SHA-256 `88aca7a9a60c21713f3e6d732cb17f6380776d1c2f0c06157f3414c018f09c4b`.
 
 ## Required validation failures
 
@@ -159,10 +196,12 @@ Production chunking must stop without publishing outputs if:
 
 - the input path escapes the authorised `data/interim/corpus/` boundary;
 - the input fingerprint, schema version or frozen counts differ;
+- the configured temporary sentinel already occurs in parent text;
 - an input record is empty, duplicated or out of order;
 - a chunk is empty or exceeds 200 characters;
 - a chunk cannot be mapped to one contiguous parent character range;
 - a chunk boundary cuts through a positioned line;
+- an embedded line newline is not restored or the temporary sentinel remains in output;
 - a referenced line or parent record is missing;
 - a chunk bounding box is non-finite or outside its parent region;
 - any parent line is absent from all chunks;
