@@ -1,0 +1,105 @@
+{
+  "embedding_index_config_schema_version": "1.0",
+  "configuration_id": "baseline-openai-ada002-faiss-flatip-v1",
+  "decision_status": "accepted_pending_production_implementation",
+  "input": {
+    "relative_path": "data/processed/corpus/chunks.jsonl",
+    "sha256": "bce9702308a65b9e9ab3bcdb0781ad308d509b56904a95ec7bab4feffebca645",
+    "size_bytes": 5153315,
+    "record_count": 5113,
+    "chunk_schema_version": "1.0",
+    "chunking_summary_relative_path": "data/processed/audit/chunking-summary.json",
+    "chunking_summary_sha256": "d31c5ed3a3adca6d4f4f839e404c6582ef4419b385ffc5e5b49d253ac21f96d5"
+  },
+  "embedding": {
+    "client_class": "OpenAIEmbeddings",
+    "client_package": "langchain-openai",
+    "client_package_version": "1.4.2",
+    "requested_model": "text-embedding-ada-002",
+    "observed_smoke_test_response_model": "text-embedding-ada-002-v2",
+    "observed_response_model_is_regeneration_requirement": false,
+    "dimensions": 1536,
+    "dimensions_argument": null,
+    "token_encoding": "cl100k_base",
+    "embedding_context_length": 8191,
+    "api_key_environment_variable": "OPENAI_API_KEY",
+    "api_key_file_relative_path": ".env"
+  },
+  "request_policy": {
+    "batch_size": 256,
+    "max_retries": 2,
+    "retry_min_seconds": 4,
+    "retry_max_seconds": 20,
+    "timeout_seconds": 60.0,
+    "show_progress_bar": false,
+    "skip_empty": false,
+    "check_embedding_context_length": true,
+    "tiktoken_enabled": true,
+    "tiktoken_model_name": "text-embedding-ada-002",
+    "resumable_batch_staging": true,
+    "honour_server_retry_after": true,
+    "account_rate_limit_is_runtime_specific": true
+  },
+  "api_constraints": {
+    "evidence_checked_date": "2026-09-09",
+    "maximum_inputs_per_request": 2048,
+    "maximum_tokens_per_input": 8192,
+    "maximum_total_tokens_per_request": 300000,
+    "account_rate_limit_not_frozen": true
+  },
+  "vector_representation": {
+    "numpy_package_version": "2.5.1",
+    "dtype": "float32",
+    "memory_layout": "C_contiguous",
+    "finite_values_required": true,
+    "normalisation": "explicit_l2",
+    "normalise_corpus_vectors": true,
+    "normalise_query_vectors": true,
+    "post_normalisation_norm_tolerance": 1e-06
+  },
+  "faiss": {
+    "package": "faiss-cpu",
+    "package_version": "1.15.0",
+    "index_class": "IndexFlatIP",
+    "metric": "inner_product",
+    "similarity_interpretation": "cosine_similarity_for_l2_normalised_vectors",
+    "approximate_search": false,
+    "training_required": false
+  },
+  "retrieval": {
+    "k": null,
+    "decision_status": "unresolved_pending_retrieval_evaluation"
+  },
+  "output": {
+    "embedding_matrix_relative_path": "data/processed/embeddings/chunk-embeddings.npy",
+    "faiss_index_relative_path": "data/processed/index/chunks.faiss",
+    "index_mapping_relative_path": "data/processed/index/chunk-mapping.jsonl",
+    "summary_relative_path": "data/processed/audit/embedding-index-summary.json",
+    "staging_relative_directory": "data/processed/embeddings/staging",
+    "index_mapping_schema_version": "1.0",
+    "summary_schema_version": "1.0",
+    "overwrite_policy": "require_explicit_flag",
+    "summary_written_last": true
+  },
+  "expected_source_specific_audit": {
+    "input_chunk_count": 5113,
+    "input_total_character_count": 848280,
+    "input_total_token_count": 303045,
+    "minimum_chunk_token_count": 2,
+    "median_chunk_token_count": 48,
+    "p95_chunk_token_count": 135,
+    "maximum_chunk_token_count": 183,
+    "inputs_over_api_token_limit": 0,
+    "duplicate_text_occurrence_count": 5,
+    "request_batch_count": 20,
+    "maximum_inputs_in_one_batch": 256,
+    "maximum_tokens_in_one_batch": 22552,
+    "embedding_matrix_shape": [
+      5113,
+      1536
+    ],
+    "faiss_index_dimension": 1536,
+    "faiss_index_total": 5113,
+    "index_mapping_record_count": 5113
+  }
+}
