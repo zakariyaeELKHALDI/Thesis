@@ -1,0 +1,78 @@
+{
+  "benchmark": {
+    "base_paper": {
+      "citation": "Tophel et al. (2025), Towards an AI tutor for undergraduate geotechnical engineering",
+      "doi": "10.1007/s10791-025-09580-8",
+      "reported_full_question_bank_count": 391,
+      "reported_selected_question_count": 20
+    },
+    "dataset_id": "tophel-2025-challenging-20-reconstruction-v1",
+    "question_ids": [
+      "2.3b",
+      "2.8c",
+      "2.9d",
+      "3.5c",
+      "3.6a",
+      "3.7d",
+      "3.7e",
+      "3.12c",
+      "4.5",
+      "5.2",
+      "6.6b",
+      "6.7a",
+      "6.10a",
+      "6.10b",
+      "7.9",
+      "11.4a",
+      "11.18a",
+      "12.8",
+      "12.10",
+      "12.16"
+    ],
+    "question_text_availability": "not_published_in_base_paper_reconstructed_from_cited_textbook",
+    "supporting_paper": {
+      "citation": "Chen et al. (2024), An Investigation into the Utility of Large Language Models in Geotechnical Education and Problem Solving",
+      "doi": "10.3390/geotechnics4020026"
+    }
+  },
+  "configuration_id": "tophel-2025-evaluation-questions-v1",
+  "evaluation_question_config_schema_version": "1.0",
+  "expected_audit": {
+    "chapter_counts": {
+      "11": 2,
+      "12": 3,
+      "2": 3,
+      "3": 5,
+      "4": 1,
+      "5": 1,
+      "6": 4,
+      "7": 1
+    },
+    "contains_figure_count": 0,
+    "contains_table_count": 6,
+    "question_count": 20,
+    "question_projection_sha256": "d785ffa3164d330f689512e4b52794a6316fa94596287bbb60ddf1378e27b343",
+    "questions_sha256": "ec7c151ba709eb6e55d37290dc8fb349a5def8b204f439b8e354f71d0b97d599",
+    "source_label_discrepancy_count": 1
+  },
+  "input": {
+    "question_schema_version": "1.0",
+    "relative_path": "data/raw/evaluation/questions/benchmark-questions.jsonl"
+  },
+  "leakage_controls": {
+    "add_evaluation_questions_to_corpus_index": false,
+    "ground_truth_available_during_generation": false,
+    "ground_truth_relative_path": "data/raw/ground_truth/",
+    "question_file_tracked_by_git": false
+  },
+  "retrieval_evaluation": {
+    "candidate_depths": null,
+    "selected_depth_k": null,
+    "selection_status": "unresolved_pending_retrieval_evaluation"
+  },
+  "source_textbook": {
+    "citation": "Das and Sobhan (2014), Principles of Geotechnical Engineering, eighth edition, SI",
+    "expected_pdf_sha256": "734cc8ad0824bbe8ae5f21db5bd5f9dd1850a620c4f85f497daf55d64cd65be6",
+    "transcription_method": "manual_text_only_standalone_reconstruction"
+  }
+}
