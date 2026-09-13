@@ -1,0 +1,94 @@
+{
+  "audit_date": "2026-09-12",
+  "audit_schema_version": "1.0",
+  "audit_status": "passed",
+  "configuration": {
+    "configuration_id": "baseline-openai-ada002-faiss-flatip-v1",
+    "decision_status_at_generation": "accepted_pending_production_implementation",
+    "relative_path": "configs/embedding-index-config.json",
+    "sha256": "7a36bb84bfb190bed02767a30a000e84eb2d512b80a5af2e2832b25849d3bbf2"
+  },
+  "deterministic_regeneration": {
+    "embedded_batch_count": 0,
+    "final_fingerprints_identical": true,
+    "invalid_placeholder_credential_used": true,
+    "resumed_batch_count": 20,
+    "status": "passed"
+  },
+  "implementation_git_commit": "b2c11d1",
+  "independent_audit": {
+    "api_request_made": false,
+    "faiss_reconstructed_matrix_exact_match": true,
+    "imports_production_module": false,
+    "mapping_order_and_provenance_passed": true,
+    "production_wrapper_exposes_raw_response_indices": false,
+    "representative_search_count": 5,
+    "representative_searches_match_exhaustive_numpy": true,
+    "staging_reconstruction_exact_match": true,
+    "status": "passed",
+    "vector_order_evidence": "wrapper_contract_and_direct_wrapper_smoke_test"
+  },
+  "input": {
+    "chunk_count": 5113,
+    "chunking_summary_sha256": "d31c5ed3a3adca6d4f4f839e404c6582ef4419b385ffc5e5b49d253ac21f96d5",
+    "chunks_relative_path": "data/processed/corpus/chunks.jsonl",
+    "chunks_sha256": "bce9702308a65b9e9ab3bcdb0781ad308d509b56904a95ec7bab4feffebca645",
+    "token_count": 303045
+  },
+  "output": {
+    "embedding_index_summary": {
+      "relative_path": "data/processed/audit/embedding-index-summary.json",
+      "sha256": "c9e5118ee9ecaf15339883e09becd0a046b5019287a790264be5a3dabe9a64eb",
+      "size_bytes": 1963
+    },
+    "embedding_matrix": {
+      "c_contiguous": true,
+      "dimensions": 1536,
+      "dtype": "float32",
+      "finite_values": true,
+      "norm_maximum": 1.0000003576278687,
+      "norm_minimum": 0.9999997019767761,
+      "relative_path": "data/processed/embeddings/chunk-embeddings.npy",
+      "rows": 5113,
+      "sha256": "5691dd58b3de2c79985ebd403f80e0c70a7d95cb2609c835325062f7bad2c1c0",
+      "size_bytes": 31414400
+    },
+    "faiss_index": {
+      "dimensions": 1536,
+      "index_class": "IndexFlatIP",
+      "relative_path": "data/processed/index/chunks.faiss",
+      "sha256": "e049fa90324346c764c849071dbc49b7bc0cce125bc2fe8331a6f560fea8bdd1",
+      "size_bytes": 31414317,
+      "vector_count": 5113
+    },
+    "index_mapping": {
+      "record_count": 5113,
+      "relative_path": "data/processed/index/chunk-mapping.jsonl",
+      "schema_version": "1.0",
+      "sha256": "fc0515de3e983988f04fe1e5d7ee80cfc85eae3cce8e3153555a02e04b274a4f",
+      "size_bytes": 1495044
+    }
+  },
+  "overwrite_protection": {
+    "existing_outputs_rejected_without_flag": true,
+    "status": "passed"
+  },
+  "production_run": {
+    "batch_count": 20,
+    "batch_size": 256,
+    "embedded_batch_count": 20,
+    "embedding_dimensions": 1536,
+    "requested_embedding_model": "text-embedding-ada-002",
+    "status": "passed"
+  },
+  "retrieval": {
+    "decision_status": "unresolved_pending_retrieval_evaluation",
+    "k": null
+  },
+  "staging": {
+    "matrix_file_count": 20,
+    "metadata_file_count": 20,
+    "retained_for_recovery_and_exact_regeneration": true,
+    "total_file_count": 40
+  }
+}

@@ -2,7 +2,12 @@
 
 ## Decision status
 
-- **Status:** Accepted for production implementation; production outputs not yet generated
+- **Decision status at freeze:** Accepted for production implementation; production outputs not yet generated
+- **Current implementation status:** Production outputs generated, independently audited and deterministically regenerated
+- **Production implementation commit:** `b2c11d1`
+- **Production audit date:** `2026-09-12`
+- **Production audit:** `docs/embedding-index-production-audit.md`
+- **Versioned metrics:** `results/metrics/embedding-index-production-audit.json`
 - **Decision date:** 2026-09-09
 - **Embedding-index config schema version:** `1.0`
 - **Index-mapping schema version:** `1.0`
@@ -153,7 +158,7 @@ Production embedding and index construction must stop without publishing final o
 - record count, schema, ordering, identifiers or expected token audit differs;
 - any input text is empty or any chunk identifier is duplicated;
 - a batch boundary, model or configuration differs from resumable staging evidence;
-- the API returns missing, duplicated or out-of-order response indices;
+- the embedding wrapper returns a vector count inconsistent with the ordered batch input;
 - an embedding has the wrong dimension or contains a non-finite value;
 - conversion does not produce a C-contiguous `float32` matrix;
 - any vector remains outside the accepted norm tolerance after explicit L2 normalisation;
