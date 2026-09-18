@@ -1,0 +1,105 @@
+{
+  "artifacts": {
+    "blinded_judgement_template": {
+      "relative_path": "data/raw/evaluation/retrieval-judgements/relevance-judgements.jsonl",
+      "sha256": "bbc72d5e423bf5d745ec93cb9b6de952520135039a3f6dac5132b3a784b718e1",
+      "size_bytes": 290739
+    },
+    "preparation_summary": {
+      "relative_path": "data/processed/audit/retrieval-depth-evaluation-summary.json",
+      "sha256": "6083b0048d45905cd6724b472a6ec6f577a16f5c98984e9bde4fa8b01402e040",
+      "size_bytes": 1550
+    },
+    "query_embedding_matrix": {
+      "relative_path": "data/processed/evaluation/retrieval/query-embeddings.npy",
+      "sha256": "fddd63335e250d875781890cec48cc646165e221d9b0cabdd22f489dc35be882",
+      "size_bytes": 123008
+    },
+    "ranked_candidate_pool": {
+      "relative_path": "data/processed/evaluation/retrieval/ranked-candidate-pool.jsonl",
+      "sha256": "1713a14a25433abde59791eede325f33605da86da85019e2cda3597ec0ffc114",
+      "size_bytes": 298903
+    }
+  },
+  "audit_date": "2026-09-18",
+  "audit_schema_version": "1.0",
+  "audit_status": "passed",
+  "configuration": {
+    "configuration_id": "benchmark-retrieval-depth-evaluation-v1",
+    "configuration_sha256": "c99ee459c389407dd77e710b8b2ec5081d51889d0d1e5a713d5dcdf9d5d68c0f",
+    "frozen_configuration_changed": false
+  },
+  "independent_audit": {
+    "all_candidate_positions_match_faiss": true,
+    "all_candidate_scores_match_faiss": true,
+    "api_request_made_during_independent_audit": false,
+    "candidate_and_judgement_identifier_sets_equal": true,
+    "candidate_judgement_identifiers_unique": true,
+    "independently_reproduced_search_count": 20,
+    "initial_judgements_all_empty": true,
+    "judgements_in_blinded_identifier_order": true,
+    "notebook_safety_audit_passed": true,
+    "verified_file_fingerprint_count": 12
+  },
+  "initial_request_incident": {
+    "classification": "non_persistent_http_404_resolved_by_controlled_retry",
+    "configuration_changed_during_resolution": false,
+    "direct_embedding_probe": {
+      "input_records": 1,
+      "passed": true,
+      "prompt_tokens": 7,
+      "returned_dimensions": 1536,
+      "returned_model": "text-embedding-ada-002-v2"
+    },
+    "first_production_request_http_status": 404,
+    "first_production_request_succeeded": false,
+    "langchain_embedding_probe": {
+      "client_class": "OpenAIEmbeddings",
+      "input_records": 1,
+      "passed": true,
+      "returned_dimensions": 1536
+    },
+    "model_listing_passed": true,
+    "model_retrieval_passed": true,
+    "partial_artifacts_created": false,
+    "requested_model_listed": true,
+    "routing_diagnostic_standard_openai_endpoint": true
+  },
+  "leakage_controls": {
+    "answer_generation_performed": false,
+    "evaluation_questions_added_to_corpus_index": false,
+    "ground_truth_accessed": false,
+    "private_production_artifacts_ignored_by_git": true,
+    "question_or_chunk_text_in_tracked_evidence": false,
+    "rank_score_or_provenance_exposed_in_judgement_file": false
+  },
+  "package_versions": {
+    "faiss-cpu": "1.15.0",
+    "langchain-openai": "1.4.2",
+    "numpy": "2.5.1",
+    "openai": "2.53.0",
+    "tiktoken": "0.13.0"
+  },
+  "production_preparation": {
+    "candidate_count": 400,
+    "completed_judgement_count": 0,
+    "faiss_index_class": "IndexFlatIP",
+    "faiss_vector_count": 5113,
+    "judgement_pool_depth": 20,
+    "query_embedding_c_contiguous": true,
+    "query_embedding_dimensions": 1536,
+    "query_embedding_dtype": "float32",
+    "query_embedding_norm_maximum": 1.000000238418579,
+    "query_embedding_norm_minimum": 0.9999998211860657,
+    "question_count": 20,
+    "question_embedding_token_count": 1675,
+    "requested_embedding_model": "text-embedding-ada-002",
+    "selected_depth_k": null,
+    "selection_status": "unresolved_pending_relevance_judgements"
+  },
+  "source_commits": {
+    "implementation_commit": "a0aa6b80f917aaac117ea2d8e1d3f4f2a402c9e4",
+    "notebook_definition_commit": "dcc3d510338f96fcbdde1ac225490c2ddf16a591",
+    "protocol_commit": "cbd4d0262d19d48b4d9c5fd1c3e3c9140f59f649"
+  }
+}
