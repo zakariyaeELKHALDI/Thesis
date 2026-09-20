@@ -1,0 +1,90 @@
+{
+  "decision_status": "frozen_before_v2_expanded_search",
+  "judgement_reuse": {
+    "existing_rank_end": 20,
+    "existing_rank_start": 1,
+    "new_judgement_count": 200,
+    "new_rank_end": 30,
+    "new_rank_start": 21,
+    "prefix_match_fields": [
+      "candidate_schema_version",
+      "chunk_character_count",
+      "chunk_id",
+      "chunk_text_sha256",
+      "chunk_token_count",
+      "index_position",
+      "parent_record_id",
+      "pdf_page_index",
+      "pdf_page_number",
+      "printed_page_number",
+      "query_text_sha256",
+      "question_id",
+      "question_position",
+      "rank",
+      "similarity_score",
+      "source_id"
+    ],
+    "reused_judgement_count": 400,
+    "total_v2_candidate_count": 600,
+    "transfer_method": "validated_question_id_chunk_id_pair",
+    "transferred_values": [
+      "relevance_grade",
+      "judgement_note"
+    ]
+  },
+  "lineage_schema_version": "1.0",
+  "query_embedding_reuse": {
+    "api_request_required": false,
+    "expected_dtype": "float32",
+    "expected_matrix_shape": [
+      20,
+      1536
+    ],
+    "source_relative_path": "data/processed/evaluation/retrieval/query-embeddings.npy",
+    "source_sha256": "fddd63335e250d875781890cec48cc646165e221d9b0cabdd22f489dc35be882"
+  },
+  "source_v1": {
+    "completed_judgement_count": 400,
+    "completed_judgement_relative_path": "data/raw/evaluation/retrieval-judgements/relevance-judgements.jsonl",
+    "completed_judgement_sha256": "33f408a2f744d662f78d9eaa6c77d9a1f321d487899f7a2758bf162646ca8fe9",
+    "configuration_id": "benchmark-retrieval-depth-evaluation-v1",
+    "configuration_relative_path": "configs/retrieval-evaluation-config.json",
+    "configuration_sha256": "c99ee459c389407dd77e710b8b2ec5081d51889d0d1e5a713d5dcdf9d5d68c0f",
+    "faiss_index_sha256": "e049fa90324346c764c849071dbc49b7bc0cce125bc2fe8331a6f560fea8bdd1",
+    "initial_metrics_relative_path": "results/metrics/retrieval-depth-evaluation.json",
+    "initial_metrics_sha256": "1b60b2b7accc7cb75716adea5e0dc90936d1cbddb08d9c0aec03f4a7c6ace453",
+    "initial_metrics_table_relative_path": "results/tables/retrieval-depth-metrics.csv",
+    "initial_metrics_table_sha256": "f152ef7b5b41fb9defedd8630da4f28eb4673457940742ad79f19331db9292f5",
+    "preparation_summary_relative_path": "data/processed/audit/retrieval-depth-evaluation-summary.json",
+    "preparation_summary_sha256": "6083b0048d45905cd6724b472a6ec6f577a16f5c98984e9bde4fa8b01402e040",
+    "question_sha256": "ec7c151ba709eb6e55d37290dc8fb349a5def8b204f439b8e354f71d0b97d599",
+    "ranked_candidate_pool_depth": 20,
+    "ranked_candidate_pool_relative_path": "data/processed/evaluation/retrieval/ranked-candidate-pool.jsonl",
+    "ranked_candidate_pool_sha256": "1713a14a25433abde59791eede325f33605da86da85019e2cda3597ec0ffc114",
+    "relevance_judgement_template_sha256": "bbc72d5e423bf5d745ec93cb9b6de952520135039a3f6dac5132b3a784b718e1",
+    "retrieval_adequacy_commit": "e71c06a",
+    "retrieval_adequacy_gate_triggered": true,
+    "selected_depth_k": null
+  },
+  "target_v2": {
+    "candidate_depths": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      8,
+      10,
+      15,
+      20
+    ],
+    "configuration_id": "benchmark-retrieval-depth-evaluation-v2",
+    "configuration_relative_path": "configs/retrieval-evaluation-config-v2.json",
+    "configuration_sha256": "04b69b8072509f165cf135478349d4e4a7030928c96036082258cd200b98358e",
+    "diagnostic_tail_end_rank": 30,
+    "diagnostic_tail_start_rank": 21,
+    "judgement_pool_depth": 30,
+    "maximum_candidate_depth": 20,
+    "protocol_amendment_commit": "98f3e92"
+  }
+}
