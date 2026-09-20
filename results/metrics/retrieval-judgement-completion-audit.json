@@ -1,0 +1,28 @@
+{
+  "assessor_confirmed_no_ai_influence": true,
+  "audit_schema_version": "1.0",
+  "audit_status": "PASSED",
+  "checkpoint_equals_current_file": true,
+  "checkpoint_metadata_matches": true,
+  "checkpoint_sha256": "33f408a2f744d662f78d9eaa6c77d9a1f321d487899f7a2758bf162646ca8fe9",
+  "completed_judgement_count": 400,
+  "configuration_id": "benchmark-retrieval-depth-evaluation-v1",
+  "configuration_sha256": "c99ee459c389407dd77e710b8b2ec5081d51889d0d1e5a713d5dcdf9d5d68c0f",
+  "deterministic_blinded_order_preserved": true,
+  "grade_distribution_recorded": false,
+  "grade_values_valid": true,
+  "ground_truth_accessed": false,
+  "judgement_record_count": 400,
+  "judgement_sha256": "33f408a2f744d662f78d9eaa6c77d9a1f321d487899f7a2758bf162646ca8fe9",
+  "notebook_action_flags": {
+    "RUN_ANNOTATION_SESSION": false,
+    "RUN_OFFLINE_SCORING": false,
+    "RUN_PAID_PREPARATION": false
+  },
+  "notebook_error_outputs_retained": false,
+  "positive_evidence_notes_present": true,
+  "private_annotation_prompt_retained": false,
+  "question_or_chunk_text_recorded": false,
+  "remaining_judgement_count": 0,
+  "unique_judgement_identifier_count": 400
+}
