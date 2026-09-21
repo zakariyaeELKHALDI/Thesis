@@ -1,0 +1,49 @@
+{
+  "api_request_made": false,
+  "audit_schema_version": "1.0",
+  "audit_status": "PASSED",
+  "candidate_prefix_match_count": 600,
+  "configuration_id": "benchmark-retrieval-depth-evaluation-v3",
+  "configuration_sha256": "5d847a027c098694d47cabc9dd2f73336a98c1d8b1c5e0c645d89e5c06dd84cb",
+  "contract_compatibility_commit": "0a515f7ff2ced082bdfd9e5a4af37b3b61b93d15",
+  "contract_initial_commit": "3dfcb0bffd703d4488cfa3313ce6960d74d3c4af",
+  "deterministic_blinded_order_preserved": true,
+  "existing_notebook_action_flags": {
+    "notebooks/03_retrieval_depth_evaluation.ipynb": {
+      "RUN_ANNOTATION_SESSION": false,
+      "RUN_OFFLINE_SCORING": false,
+      "RUN_PAID_PREPARATION": false
+    },
+    "notebooks/04_retrieval_depth_evaluation_v2.ipynb": {
+      "RUN_ANNOTATION_SESSION": false,
+      "RUN_OFFLINE_SCORING": false,
+      "RUN_V2_PREPARATION": false
+    }
+  },
+  "expanded_search_performed": true,
+  "grade_distribution_recorded": false,
+  "ground_truth_accessed": false,
+  "human_grade_inference_performed": false,
+  "implementation_commit": "99c36fde1a3c474fde665acc886129342c9df94a",
+  "implementation_module_sha256": "84d6bb6392357c2eaaf787041ccb63ff1b140cdbb47d73c2a5a17a71dec00196",
+  "implementation_test_sha256": "227b3ff2312f9c123980b6dfbbbfbcc7a28baad2a797a2b3169cad6771e74d88",
+  "lineage_sha256": "4c1f305e5245dc37be99a299f3f3f694b63cd745fa5efb2315afe71070f05a34",
+  "migrated_judgement_count": 600,
+  "migrated_values_match_v2_exactly": true,
+  "new_annotation_performed": false,
+  "new_unjudged_count": 200,
+  "prefix_match_field_count": 16,
+  "private_outputs_git_ignored": true,
+  "protocol_amendment_commit": "5c8e0b934d61fa37f1e7551efed24c5f1597989a",
+  "query_embedding_byte_identical_to_v2": true,
+  "query_embedding_matrix_sha256": "fddd63335e250d875781890cec48cc646165e221d9b0cabdd22f489dc35be882",
+  "question_or_chunk_text_recorded": false,
+  "source_completed_judgements_sha256": "8b881829769b5c34d1064fed70fb389b0c811a0f1ef9d90fa96a769b6f03bf4a",
+  "source_ranked_candidate_pool_sha256": "bebcb1564d946ee127b5d24be22a8b5e2cd170bcf83d7fd7f464c2e072fefeee",
+  "total_candidate_count": 800,
+  "total_judgement_count": 800,
+  "v3_judgement_template_sha256": "4ce2bd0dd27cafdd7c401d54afc1db5f8344f80fb17314c3403e5c90736422e1",
+  "v3_notebook_created": false,
+  "v3_preparation_summary_sha256": "86949979ef117e58dfa28a7764923463f95e5d82ab7d8cd0f653939801cabbd5",
+  "v3_ranked_candidate_pool_sha256": "6045c15a6ac312deda123ea998a890a94c9c167595eba43b09f419ed35d46b80"
+}
