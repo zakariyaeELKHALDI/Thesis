@@ -1,0 +1,182 @@
+{
+  "candidate_range_adequacy_gate": {
+    "action_if_triggered": "Do not select k. Report the retrieval depth as unresolved and investigate the retrieval method rather than automatically expanding the candidate range again.",
+    "pool_depth_is_not_a_candidate_depth": true,
+    "trigger": "A question without direct evidence in ranks 1-30 gains direct evidence in ranks 31-40."
+  },
+  "configuration_id": "benchmark-retrieval-depth-evaluation-v3",
+  "decision_status": "protocol_frozen_before_v3_expanded_search",
+  "inputs": {
+    "embedding_index": {
+      "chunk_count": 5113,
+      "configuration_relative_path": "configs/embedding-index-config.json",
+      "configuration_sha256": "7a36bb84bfb190bed02767a30a000e84eb2d512b80a5af2e2832b25849d3bbf2",
+      "embedding_matrix_relative_path": "data/processed/embeddings/chunk-embeddings.npy",
+      "embedding_matrix_sha256": "5691dd58b3de2c79985ebd403f80e0c70a7d95cb2609c835325062f7bad2c1c0",
+      "faiss_index_relative_path": "data/processed/index/chunks.faiss",
+      "faiss_index_sha256": "e049fa90324346c764c849071dbc49b7bc0cce125bc2fe8331a6f560fea8bdd1",
+      "index_mapping_relative_path": "data/processed/index/chunk-mapping.jsonl",
+      "index_mapping_sha256": "fc0515de3e983988f04fe1e5d7ee80cfc85eae3cce8e3153555a02e04b274a4f",
+      "input_chunks_relative_path": "data/processed/corpus/chunks.jsonl",
+      "input_chunks_sha256": "bce9702308a65b9e9ab3bcdb0781ad308d509b56904a95ec7bab4feffebca645",
+      "summary_relative_path": "data/processed/audit/embedding-index-summary.json",
+      "summary_sha256": "c9e5118ee9ecaf15339883e09becd0a046b5019287a790264be5a3dabe9a64eb"
+    },
+    "evaluation_questions": {
+      "configuration_relative_path": "configs/evaluation-question-config.json",
+      "configuration_sha256": "bae9572fdc3007b857e7d8af3c2e01a0ef0f5b9b8767f187c8de5b31771007c6",
+      "question_count": 20,
+      "question_projection_sha256": "d785ffa3164d330f689512e4b52794a6316fa94596287bbb60ddf1378e27b343",
+      "questions_relative_path": "data/raw/evaluation/questions/benchmark-questions.jsonl",
+      "questions_sha256": "ec7c151ba709eb6e55d37290dc8fb349a5def8b204f439b8e354f71d0b97d599"
+    }
+  },
+  "leakage_controls": {
+    "answer_generation_allowed_during_retrieval_evaluation": false,
+    "evaluation_questions_must_not_enter_corpus_index": true,
+    "ground_truth_available_during_relevance_judgement": false,
+    "ground_truth_available_during_retrieval": false,
+    "only_question_and_retrieved_corpus_chunk_may_be_judged": true,
+    "protocol_frozen_before_v3_expanded_search": true,
+    "question_embeddings_used_only_as_runtime_queries": true,
+    "reused_query_embedding_matrix_frozen_before_v3_protocol": true
+  },
+  "metrics": {
+    "conventional_recall_reported": false,
+    "direct_evidence_grade": 2,
+    "hit_rate_denominator": 20,
+    "ndcg_gain_function": "two_power_grade_minus_one",
+    "primary_metric": "direct_evidence_hit_rate_at_k",
+    "recall_omission_reason": "The complete 5113-chunk corpus is not exhaustively judged.",
+    "reported_metrics": [
+      "direct_evidence_hit_count_at_k",
+      "direct_evidence_hit_rate_at_k",
+      "direct_evidence_hit_rate_wilson_95_interval",
+      "useful_evidence_hit_count_at_k",
+      "useful_evidence_hit_rate_at_k",
+      "useful_evidence_hit_rate_wilson_95_interval",
+      "direct_evidence_mrr_at_k",
+      "graded_ndcg_at_k",
+      "useful_evidence_precision_at_k",
+      "mean_retrieved_context_tokens_at_k",
+      "mean_retrieved_context_characters_at_k"
+    ],
+    "useful_evidence_minimum_grade": 1
+  },
+  "outputs": {
+    "blinded_judgement_file_relative_path": "data/raw/evaluation/retrieval-judgements/v3/relevance-judgements.jsonl",
+    "copyrighted_question_and_chunk_text_tracked_by_git": false,
+    "metrics_relative_path": "results/metrics/retrieval-depth-evaluation-v3.json",
+    "metrics_table_relative_path": "results/tables/retrieval-depth-metrics-v3.csv",
+    "notebook_relative_path": "notebooks/05_retrieval_depth_evaluation_v3.ipynb",
+    "query_embedding_matrix_relative_path": "data/processed/evaluation/retrieval/v3/query-embeddings.npy",
+    "ranked_candidate_pool_relative_path": "data/processed/evaluation/retrieval/v3/ranked-candidate-pool.jsonl",
+    "summary_relative_path": "data/processed/audit/retrieval-depth-evaluation-v3-summary.json",
+    "tracked_metrics_must_not_contain_question_or_chunk_text": true
+  },
+  "protocol_boundary": {
+    "faiss_search_run": false,
+    "ground_truth_accessed": false,
+    "question_embeddings_generated": false,
+    "relevance_judgements_created": false
+  },
+  "query_embedding": {
+    "batch_count": 1,
+    "client_class": "OpenAIEmbeddings",
+    "client_package": "langchain-openai",
+    "client_package_version": "1.4.2",
+    "dimensions": 1536,
+    "dimensions_argument": null,
+    "dtype": "float32",
+    "expected_query_count": 20,
+    "finite_values_required": true,
+    "memory_layout": "C_contiguous",
+    "normalisation": "explicit_l2",
+    "normalise_query_vectors": true,
+    "ordered_batch_method": "embed_documents",
+    "post_normalisation_norm_tolerance": 1e-06,
+    "requested_model": "text-embedding-ada-002",
+    "token_encoding": "cl100k_base"
+  },
+  "relevance_judgements": {
+    "assessor_count": 1,
+    "blinded_order_method": "ascending_sha256_of_configuration_id_question_id_chunk_id",
+    "ground_truth_answers_prohibited": true,
+    "hidden_during_judgement": [
+      "question_id",
+      "chunk_id",
+      "retrieval_rank",
+      "similarity_score",
+      "candidate_depth_membership",
+      "source_provenance"
+    ],
+    "judgement_context": [
+      "question_text",
+      "retrieved_chunk_text"
+    ],
+    "judgement_unit": "question_chunk_pair",
+    "model_generated_answers_prohibited": true,
+    "positive_grade_note_required": true,
+    "relevance_grades": [
+      {
+        "definition": "The chunk does not help answer the question or only shares unrelated terminology.",
+        "grade": 0,
+        "label": "not_relevant"
+      },
+      {
+        "definition": "The chunk provides a useful definition, assumption, relationship or background step but is not sufficient as the main evidence.",
+        "grade": 1,
+        "label": "supporting_evidence"
+      },
+      {
+        "definition": "The chunk provides the central equation, method, worked procedure or concept needed to answer the question.",
+        "grade": 2,
+        "label": "direct_evidence"
+      }
+    ]
+  },
+  "retrieval_evaluation_config_schema_version": "1.0",
+  "search": {
+    "backend_package": "faiss-cpu",
+    "backend_package_version": "1.15.0",
+    "candidate_depths": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      8,
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
+    "exact_search": true,
+    "index_class": "IndexFlatIP",
+    "judgement_pool_depth": 40,
+    "mapping_position_field": "index_position",
+    "maximum_candidate_depth": 30,
+    "metric": "inner_product",
+    "rank_origin": 1,
+    "reference_depth": 4,
+    "reference_depth_basis": "installed_langchain_core_vectorstore_similarity_search_default",
+    "reference_package": "langchain-core",
+    "reference_package_version": "1.5.3",
+    "reference_signature": "(self, query: 'str', k: 'int' = 4, **kwargs: 'Any') -> 'list[Document]'",
+    "score_order": "descending",
+    "search_once_at_pool_depth_and_score_nested_prefixes": true,
+    "similarity_interpretation": "cosine_similarity_for_l2_normalised_vectors"
+  },
+  "selection_rule": {
+    "applicable_only_if_candidate_range_adequacy_gate_passes": true,
+    "mrr_ndcg_precision_are_reported_not_selection_tiebreakers": true,
+    "ordered_steps": [
+      "retain_depths_with_maximum_direct_evidence_hit_count",
+      "retain_depths_with_maximum_useful_evidence_hit_count",
+      "select_smallest_remaining_depth"
+    ],
+    "selected_depth_k": null,
+    "selection_status": "unresolved_pending_relevance_judgements"
+  }
+}
