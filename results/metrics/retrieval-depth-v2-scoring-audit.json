@@ -1,0 +1,57 @@
+{
+  "api_request_made": false,
+  "audit_schema_version": "1.0",
+  "audit_status": "PASSED",
+  "candidate_depths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    10,
+    15,
+    20
+  ],
+  "candidate_range_adequacy_gate_triggered": true,
+  "completed_judgement_count": 600,
+  "completion_audit_sha256": "cc23157f20ec3a96ea9dfffe90a3983013b8b894afa8719655a97e8b1ac65b30",
+  "configuration_id": "benchmark-retrieval-depth-evaluation-v2",
+  "configuration_sha256": "04b69b8072509f165cf135478349d4e4a7030928c96036082258cd200b98358e",
+  "csv_and_json_metric_rows_match": true,
+  "diagnostic_tail_end_rank": 30,
+  "diagnostic_tail_start_rank": 21,
+  "direct_evidence_through_rank_30_count": 19,
+  "first_tail_direct_rank_by_question": {
+    "3.6a": 28,
+    "7.9": 21
+  },
+  "grade_distribution_recorded": false,
+  "ground_truth_accessed": false,
+  "independent_gate_reconstruction_matches": true,
+  "independent_principal_metrics_match": true,
+  "judgement_sha256": "8b881829769b5c34d1064fed70fb389b0c811a0f1ef9d90fa96a769b6f03bf4a",
+  "metrics_sha256": "3dd489b55db418f170e7cd13393228303b7cdfc1a5764da90e8ea03650d0341b",
+  "metrics_table_sha256": "741f40f8a0bdc3b73c2d47304d4c176732e1e2acb4b9678cd3d23850dcae29e0",
+  "notebook_action_flags": {
+    "RUN_ANNOTATION_SESSION": false,
+    "RUN_OFFLINE_SCORING": false,
+    "RUN_V2_PREPARATION": false
+  },
+  "notebook_error_outputs_retained": false,
+  "notebook_sha256": "c51ca0d253fc505ea20fe68855265c84278c0eb5044136919998787785993368",
+  "private_annotation_prompt_retained": false,
+  "provisional_depth_without_adequacy_gate": 20,
+  "question_ids_triggering_gate": [
+    "3.6a",
+    "7.9"
+  ],
+  "question_ids_without_direct_evidence_through_rank_30": [
+    "6.6b"
+  ],
+  "question_or_chunk_text_recorded": false,
+  "ranked_candidate_pool_sha256": "bebcb1564d946ee127b5d24be22a8b5e2cd170bcf83d7fd7f464c2e072fefeee",
+  "selected_depth_k": null,
+  "selection_status": "candidate_range_expansion_required",
+  "wilson_intervals_independently_recalculated": true
+}
