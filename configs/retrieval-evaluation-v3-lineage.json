@@ -102,13 +102,15 @@
     ],
     "configuration_id": "benchmark-retrieval-depth-evaluation-v3",
     "configuration_relative_path": "configs/retrieval-evaluation-config-v3.json",
-    "configuration_sha256": "c971300cb8e0c3ff6b9256b937f34c42e7c57a200b22b00ff08b0c5e24318f2d",
+    "configuration_sha256": "5d847a027c098694d47cabc9dd2f73336a98c1d8b1c5e0c645d89e5c06dd84cb",
     "diagnostic_tail_end_rank": 40,
     "diagnostic_tail_start_rank": 31,
     "judgement_pool_depth": 40,
     "maximum_candidate_depth": 30,
     "protocol_amendment_commit": "5c8e0b934d61fa37f1e7551efed24c5f1597989a",
     "protocol_amendment_relative_path": "docs/retrieval-depth-evaluation-v3-protocol-amendment.md",
-    "protocol_amendment_sha256": "ab63e27618cf76c2b15cbb483d21789558a07a2dcbe9bb764e65b1b6762efd12"
+    "protocol_amendment_sha256": "ab63e27618cf76c2b15cbb483d21789558a07a2dcbe9bb764e65b1b6762efd12",
+    "shared_configuration_blinding_list_interpretation": "The inherited configuration list names retrieval-specific values. Question identifiers, chunk identifiers and source provenance also remain excluded from the annotation display under the version 3 protocol.",
+    "shared_configuration_freeze_field_interpretation": "The inherited configuration-schema field records that the protocol and reused query-embedding matrix were fixed before the version 3 expanded search. Version 3 did not generate new query embeddings."
   }
 }

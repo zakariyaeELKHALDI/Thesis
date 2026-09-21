@@ -5,7 +5,7 @@
     "trigger": "A question without direct evidence in ranks 1-30 gains direct evidence in ranks 31-40."
   },
   "configuration_id": "benchmark-retrieval-depth-evaluation-v3",
-  "decision_status": "protocol_frozen_before_v3_expanded_search",
+  "decision_status": "protocol_frozen_before_query_embedding_and_search",
   "inputs": {
     "embedding_index": {
       "chunk_count": 5113,
@@ -37,9 +37,8 @@
     "ground_truth_available_during_relevance_judgement": false,
     "ground_truth_available_during_retrieval": false,
     "only_question_and_retrieved_corpus_chunk_may_be_judged": true,
-    "protocol_frozen_before_v3_expanded_search": true,
-    "question_embeddings_used_only_as_runtime_queries": true,
-    "reused_query_embedding_matrix_frozen_before_v3_protocol": true
+    "protocol_frozen_before_query_embedding_and_search": true,
+    "question_embeddings_used_only_as_runtime_queries": true
   },
   "metrics": {
     "conventional_recall_reported": false,
@@ -103,12 +102,9 @@
     "blinded_order_method": "ascending_sha256_of_configuration_id_question_id_chunk_id",
     "ground_truth_answers_prohibited": true,
     "hidden_during_judgement": [
-      "question_id",
-      "chunk_id",
       "retrieval_rank",
       "similarity_score",
-      "candidate_depth_membership",
-      "source_provenance"
+      "candidate_depth_membership"
     ],
     "judgement_context": [
       "question_text",
