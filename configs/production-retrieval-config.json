@@ -1,0 +1,201 @@
+{
+  "configuration_id": "baseline-production-retrieval-ada002-faiss-flatip-k30-v1",
+  "context_assembly_boundary": {
+    "all_retrieved_records_available_to_context_assembly": true,
+    "context_format_not_selected_by_this_configuration": true,
+    "retrieved_record_count": 30,
+    "silent_filtering_prohibited": true,
+    "silent_rank_truncation_prohibited": true,
+    "silent_reranking_prohibited": true,
+    "transformation_requires_separate_versioned_configuration": true
+  },
+  "decision_status": "frozen_before_production_retriever_implementation",
+  "experimental_controls": {
+    "benchmark_contexts_must_be_identical_across_generator_models": true,
+    "benchmark_query_embeddings_reused_across_generator_models": true,
+    "corpus_index_fixed_across_generator_models": true,
+    "only_generator_model_may_change_in_main_model_comparison": true,
+    "retrieval_depth_fixed_across_generator_models": true,
+    "retrieval_settings_fixed_across_generator_models": true
+  },
+  "inputs": {
+    "chunk_embeddings": {
+      "dtype": "float32",
+      "relative_path": "data/processed/embeddings/chunk-embeddings.npy",
+      "sha256": "5691dd58b3de2c79985ebd403f80e0c70a7d95cb2609c835325062f7bad2c1c0",
+      "shape": [
+        5113,
+        1536
+      ]
+    },
+    "chunk_records": {
+      "record_count": 5113,
+      "relative_path": "data/processed/corpus/chunks.jsonl",
+      "schema_version": "1.0",
+      "sha256": "bce9702308a65b9e9ab3bcdb0781ad308d509b56904a95ec7bab4feffebca645"
+    },
+    "chunking_configuration": {
+      "relative_path": "configs/chunking-config.json",
+      "sha256": "51c41cd393aabc8718e01583bf5513b53836fa523bd94f407444de656597dfb9"
+    },
+    "embedding_index_configuration": {
+      "configuration_id": "baseline-openai-ada002-faiss-flatip-v1",
+      "relative_path": "configs/embedding-index-config.json",
+      "sha256": "7a36bb84bfb190bed02767a30a000e84eb2d512b80a5af2e2832b25849d3bbf2"
+    },
+    "embedding_index_summary": {
+      "relative_path": "data/processed/audit/embedding-index-summary.json",
+      "schema_version": "1.0",
+      "sha256": "c9e5118ee9ecaf15339883e09becd0a046b5019287a790264be5a3dabe9a64eb"
+    },
+    "faiss_index": {
+      "dimensions": 1536,
+      "index_class": "IndexFlatIP",
+      "relative_path": "data/processed/index/chunks.faiss",
+      "sha256": "e049fa90324346c764c849071dbc49b7bc0cce125bc2fe8331a6f560fea8bdd1",
+      "total_vectors": 5113
+    },
+    "index_mapping": {
+      "record_count": 5113,
+      "relative_path": "data/processed/index/chunk-mapping.jsonl",
+      "schema_version": "1.0",
+      "sha256": "fc0515de3e983988f04fe1e5d7ee80cfc85eae3cce8e3153555a02e04b274a4f"
+    }
+  },
+  "integrity_controls": {
+    "all_input_fingerprints_required_before_search": true,
+    "chunk_and_mapping_identifiers_must_match": true,
+    "chunk_count_must_equal_index_total": true,
+    "embedding_dimensions_must_equal_index_dimensions": true,
+    "faiss_index_class_must_match": true,
+    "finite_query_vector_values_required": true,
+    "index_mapping_position_must_equal_record_offset": true,
+    "query_norm_tolerance": 1e-06,
+    "query_vectors_must_be_c_contiguous_float32": true,
+    "zero_length_query_vectors_prohibited": true
+  },
+  "leakage_controls": {
+    "answer_keys_available_during_retrieval": false,
+    "ground_truth_answers_available_during_retrieval": false,
+    "relevance_grades_used_by_production_search": false,
+    "relevance_notes_used_by_production_search": false,
+    "retrieval_search_uses_only_query_embedding_and_frozen_index": true
+  },
+  "production_retrieval_config_schema_version": "1.0",
+  "query_embedding": {
+    "benchmark_mode": {
+      "api_request_required": false,
+      "enabled": true,
+      "expected_query_count": 20,
+      "perform_faiss_search_from_frozen_matrix": true,
+      "query_embedding_matrix_relative_path": "data/processed/evaluation/retrieval/v3/query-embeddings.npy",
+      "query_embedding_matrix_sha256": "fddd63335e250d875781890cec48cc646165e221d9b0cabdd22f489dc35be882",
+      "query_embedding_matrix_shape": [
+        20,
+        1536
+      ],
+      "question_configuration_relative_path": "configs/evaluation-question-config.json",
+      "question_configuration_sha256": "bae9572fdc3007b857e7d8af3c2e01a0ef0f5b9b8767f187c8de5b31771007c6",
+      "question_order_source": "evaluation_question_configuration_benchmark_question_ids",
+      "question_projection_sha256": "d785ffa3164d330f689512e4b52794a6316fa94596287bbb60ddf1378e27b343",
+      "questions_relative_path": "data/raw/evaluation/questions/benchmark-questions.jsonl",
+      "questions_sha256": "ec7c151ba709eb6e55d37290dc8fb349a5def8b204f439b8e354f71d0b97d599",
+      "reuse_ranked_candidate_pool_as_runtime_input": false
+    },
+    "common_vector_contract": {
+      "dimensions": 1536,
+      "dtype": "float32",
+      "finite_values_required": true,
+      "memory_layout": "C_contiguous",
+      "normalisation": "explicit_l2",
+      "normalise_query_vectors": true,
+      "post_normalisation_norm_tolerance": 1e-06
+    },
+    "interactive_mode": {
+      "api_key_environment_variable": "OPENAI_API_KEY",
+      "api_key_file_relative_path": ".env",
+      "api_request_required": true,
+      "client_class": "OpenAIEmbeddings",
+      "client_package": "langchain-openai",
+      "client_package_version": "1.4.2",
+      "dimensions_argument": null,
+      "enabled": true,
+      "inputs_per_request": 1,
+      "request_method": "embed_documents",
+      "requested_model": "text-embedding-ada-002",
+      "response_embedding_fingerprint_recorded_per_run": true,
+      "response_model_alias_not_assumed_stable": true,
+      "token_encoding": "cl100k_base"
+    }
+  },
+  "request_policy": {
+    "check_embedding_context_length": true,
+    "honour_server_retry_after": true,
+    "max_retries": 2,
+    "maximum_inputs_per_request": 1,
+    "maximum_tokens_per_input": 8192,
+    "retry_max_seconds": 20,
+    "retry_min_seconds": 4,
+    "show_progress_bar": false,
+    "skip_empty": false,
+    "tiktoken_enabled": true,
+    "tiktoken_model_name": "text-embedding-ada-002",
+    "timeout_seconds": 60.0
+  },
+  "returned_record_contract": {
+    "chunk_record_join_key": "chunk_id",
+    "chunk_text_loaded_from_frozen_chunk_records": true,
+    "index_mapping_fields": [
+      "chunk_id",
+      "index_mapping_schema_version",
+      "index_position",
+      "parent_record_id",
+      "pdf_page_index",
+      "pdf_page_number",
+      "printed_page_number",
+      "source_id"
+    ],
+    "rank_field": "retrieval_rank",
+    "rank_origin": 1,
+    "record_schema_version": "1.0",
+    "similarity_score_field": "similarity_score",
+    "source_provenance_required": true
+  },
+  "search": {
+    "backend_package": "faiss-cpu",
+    "backend_package_version": "1.15.0",
+    "exact_search": true,
+    "index_class": "IndexFlatIP",
+    "mapping_position_field": "index_position",
+    "metric": "inner_product",
+    "preserve_faiss_returned_order": true,
+    "rank_origin": 1,
+    "retrieval_depth_k": 30,
+    "score_order": "descending",
+    "similarity_interpretation": "cosine_similarity_for_l2_normalised_vectors"
+  },
+  "selection_evidence": {
+    "candidate_range_adequacy_gate_triggered": false,
+    "completed_judgement_count": 800,
+    "completion_audit_relative_path": "results/metrics/retrieval-depth-v3-judgement-completion-audit.json",
+    "completion_audit_sha256": "5a825f9e30dad6501832507f9b8fa164a4bcbfa83083c8279093f9c6defc9d48",
+    "decision_document_commit": "c08c259adefa54b926872814ec402761479a03a1",
+    "decision_document_relative_path": "docs/retrieval-depth-selection-decision.md",
+    "decision_document_sha256": "2da0388b705a5499664c6604f5cdb938df51062b74633e8c4233c456c95a703c",
+    "direct_evidence_hit_count_at_selected_depth": 19,
+    "evaluation_result_commit": "1aa3f3a47cbf873864ff1d0021743e8dccf2d770",
+    "further_depth_expansion_required": false,
+    "metrics_relative_path": "results/metrics/retrieval-depth-evaluation-v3.json",
+    "metrics_sha256": "4415459e535e832a84d87a468eb4ced21660be8489bfbb22248cf84f3ed3c2b4",
+    "metrics_table_relative_path": "results/tables/retrieval-depth-metrics-v3.csv",
+    "metrics_table_sha256": "306baa7eb77ae06ad019a1f9976f1110944260d4cbae67dc6206c41cf7bb78cd",
+    "question_count": 20,
+    "scoring_audit_relative_path": "results/metrics/retrieval-depth-v3-scoring-audit.json",
+    "scoring_audit_sha256": "01d84622e2d4c505e96d4d625945f206779c4401f42a1ede89c9ab64fdd5c563",
+    "selected_depth_k": 30,
+    "selection_status": "selected_by_frozen_rule",
+    "useful_evidence_hit_count_at_selected_depth": 20,
+    "v3_configuration_relative_path": "configs/retrieval-evaluation-config-v3.json",
+    "v3_configuration_sha256": "5d847a027c098694d47cabc9dd2f73336a98c1d8b1c5e0c645d89e5c06dd84cb"
+  }
+}
