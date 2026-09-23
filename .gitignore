@@ -51,3 +51,7 @@ artifacts/faiss/*
 # Operating-system files
 .DS_Store
 Thumbs.db
+
+# Private benchmark generation evidence
+data/raw/evaluation/generation/
+data/processed/evaluation/generation/

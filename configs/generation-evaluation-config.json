@@ -1,0 +1,281 @@
+{
+  "benchmark": {
+    "condition_count": 7,
+    "one_response_per_question_condition": true,
+    "planned_response_count": 140,
+    "question_count": 20,
+    "question_order": "frozen_benchmark_order",
+    "question_text_may_not_be_logged_publicly": true
+  },
+  "comparison_groups": {
+    "model_generation_effect": [
+      "P1",
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "retrieval_effect": [
+      "P0",
+      "P1"
+    ],
+    "temperature_effect": [
+      "P1",
+      "P2",
+      "P3"
+    ]
+  },
+  "conditions": [
+    {
+      "condition_id": "P0",
+      "model_id": "gpt-4-0613",
+      "model_reference_type": "fixed_snapshot",
+      "reasoning_effort": null,
+      "retrieval_depth_k": 0,
+      "retrieval_enabled": false,
+      "study_role": "paper_baseline_zero_context_control",
+      "temperature": 0.1,
+      "top_p": 1.0
+    },
+    {
+      "condition_id": "P1",
+      "model_id": "gpt-4-0613",
+      "model_reference_type": "fixed_snapshot",
+      "reasoning_effort": null,
+      "retrieval_depth_k": 30,
+      "retrieval_enabled": true,
+      "study_role": "paper_baseline_rag_temperature_0_1",
+      "temperature": 0.1,
+      "top_p": 1.0
+    },
+    {
+      "condition_id": "P2",
+      "model_id": "gpt-4-0613",
+      "model_reference_type": "fixed_snapshot",
+      "reasoning_effort": null,
+      "retrieval_depth_k": 30,
+      "retrieval_enabled": true,
+      "study_role": "paper_baseline_rag_temperature_0_5",
+      "temperature": 0.5,
+      "top_p": 1.0
+    },
+    {
+      "condition_id": "P3",
+      "model_id": "gpt-4-0613",
+      "model_reference_type": "fixed_snapshot",
+      "reasoning_effort": null,
+      "retrieval_depth_k": 30,
+      "retrieval_enabled": true,
+      "study_role": "paper_baseline_rag_temperature_1_0",
+      "temperature": 1.0,
+      "top_p": 1.0
+    },
+    {
+      "condition_id": "M1",
+      "model_id": "gpt-4.1-2025-04-14",
+      "model_reference_type": "fixed_snapshot",
+      "reasoning_effort": null,
+      "retrieval_depth_k": 30,
+      "retrieval_enabled": true,
+      "study_role": "newer_non_reasoning_model_comparison",
+      "temperature": 0.1,
+      "top_p": 1.0
+    },
+    {
+      "condition_id": "M2",
+      "model_id": "gpt-5-2025-08-07",
+      "model_reference_type": "fixed_snapshot",
+      "reasoning_effort": "low",
+      "retrieval_depth_k": 30,
+      "retrieval_enabled": true,
+      "study_role": "fixed_reasoning_model_comparison",
+      "temperature": null,
+      "top_p": null
+    },
+    {
+      "condition_id": "M3",
+      "model_id": "gpt-6-astra",
+      "model_reference_type": "mutable_alias",
+      "reasoning_effort": "low",
+      "retrieval_depth_k": 30,
+      "retrieval_enabled": true,
+      "study_role": "latest_model_exploratory_comparison",
+      "temperature": null,
+      "top_p": null
+    }
+  ],
+  "configuration_id": "benchmark-generation-evaluation-v1",
+  "context_assembly": {
+    "abort_if_context_limit_exceeded": true,
+    "context_record_field": "chunk_text",
+    "deduplication_enabled": false,
+    "include_chunk_identifier": false,
+    "include_rank": false,
+    "include_relevance_grade": false,
+    "include_relevance_note": false,
+    "include_similarity_score": false,
+    "include_source_provenance": false,
+    "preserve_faiss_returned_order": true,
+    "record_prefix_template": "[Retrieved excerpt {ordinal}]",
+    "record_separator": "\n\n",
+    "retrieved_record_count": 30,
+    "truncation_enabled": false
+  },
+  "cost_boundary": {
+    "authorized_maximum_cost_usd": null,
+    "estimated_maximum_cost_usd": null,
+    "generation_must_refuse_while_values_are_null": true,
+    "pricing_snapshot_relative_path": null
+  },
+  "decision_status": "frozen_before_paid_generation",
+  "evaluation_boundary": {
+    "condition_hidden_during_human_evaluation": true,
+    "evaluation_starts_only_after_generation_completion": true,
+    "ground_truth_not_loaded_by_generation_code": true,
+    "model_hidden_during_human_evaluation": true,
+    "responses_blinded_before_human_evaluation": true,
+    "retrieval_status_hidden_during_human_evaluation": true,
+    "sampling_parameters_hidden_during_human_evaluation": true
+  },
+  "execution_controls": {
+    "atomic_checkpoint_after_each_success": true,
+    "cost_authorization_relative_path": "configs/generation-cost-authorization.json",
+    "overwrite_existing_successful_response": false,
+    "paid_generation_enabled": false,
+    "regenerate_successful_response": false,
+    "require_clean_worktree_before_generation": true,
+    "require_committed_implementation_before_generation": true,
+    "require_context_window_audit": true,
+    "require_cost_audit": true,
+    "require_cost_authorization": true,
+    "resume_from_checkpoint": true
+  },
+  "future_tracked_outputs": {
+    "completion_audit_relative_path": "results/metrics/generation-completion-audit.json",
+    "evaluation_metrics_relative_path": "results/metrics/generation-evaluation.json",
+    "evaluation_table_relative_path": "results/tables/generation-evaluation.csv",
+    "preparation_audit_relative_path": "results/metrics/generation-preparation-audit.json"
+  },
+  "generation_evaluation_config_schema_version": "1.0",
+  "leakage_controls": {
+    "answer_keys_available_during_generation": false,
+    "ground_truth_available_during_generation": false,
+    "model_generated_relevance_advice_available": false,
+    "only_question_prompt_and_allowed_context_transmitted": true,
+    "relevance_grades_available_during_generation": false,
+    "relevance_notes_available_during_generation": false
+  },
+  "model_availability_preflight": {
+    "checked_on": "2026-09-22",
+    "model_list_api_request_made": true,
+    "openai_sdk_version": "2.53.0",
+    "paid_generation_request_made": false,
+    "required_models_listed": [
+      "gpt-4-0613",
+      "gpt-4.1-2025-04-14",
+      "gpt-5-2025-08-07",
+      "gpt-6-astra"
+    ]
+  },
+  "model_parameter_policy": {
+    "legacy_sampling_condition_ids": [
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "M1"
+    ],
+    "reasoning_condition_ids": [
+      "M2",
+      "M3"
+    ],
+    "reasoning_effort_omitted_for_non_reasoning_models": true,
+    "silent_model_substitution_prohibited": true,
+    "silent_parameter_fallback_prohibited": true,
+    "temperature_and_top_p_omitted_for_reasoning_models": true
+  },
+  "private_outputs": {
+    "checkpoint_metadata_relative_path": "data/raw/evaluation/generation/v1/responses-checkpoint-metadata.json",
+    "checkpoint_relative_path": "data/raw/evaluation/generation/v1/responses-checkpoint.jsonl",
+    "git_ignored_required": true,
+    "request_manifest_relative_path": "data/processed/evaluation/generation/v1/request-manifest.jsonl",
+    "response_relative_path": "data/raw/evaluation/generation/v1/responses.jsonl"
+  },
+  "production_retrieval": {
+    "configuration_id": "baseline-production-retrieval-ada002-faiss-flatip-k30-v1",
+    "configuration_relative_path": "configs/production-retrieval-config.json",
+    "configuration_sha256": "a6fc43effd38909ce94e5e97205d9a672b653f32a1a7c584136fca1d99dc96cc",
+    "implementation_relative_path": "src/geotech_rag/production_retrieval.py",
+    "implementation_sha256": "872b6d9f05cb685b451c3d131000b1c3747d10da19d61f8ca9e6cf323dac151f",
+    "retrieval_depth_k": 30,
+    "silent_filtering_prohibited": true,
+    "silent_rank_truncation_prohibited": true,
+    "silent_reranking_prohibited": true
+  },
+  "prompt": {
+    "prompt_id": "geotechnical-ai-tutor-generation-v1",
+    "relative_path": "configs/prompts/geotechnical-ai-tutor-generation-v1.json",
+    "sha256": "6bc2beae08686e5ed32446882c319259168a35aefa466ad0935917a2a23c11fe"
+  },
+  "protocol": {
+    "commit": "75a5c239e9dfb80735f2c7eeeefa12c740fd6d68",
+    "relative_path": "docs/generation-evaluation-protocol.md",
+    "sha256": "82b8854eabd6e2eb474a12ca8c72f94f962a4df0c46a68dd4ad4d9142c9b50db"
+  },
+  "request_policy": {
+    "api_response_storage_requested": false,
+    "endpoint": "chat.completions",
+    "honour_server_retry_after": true,
+    "legacy_output_token_parameter": "max_tokens",
+    "logical_max_output_tokens": 2000,
+    "maximum_attempt_count": 3,
+    "modern_output_token_parameter": "max_completion_tokens",
+    "n": 1,
+    "parallel_request_count": 1,
+    "response_format": "plain_text",
+    "retry_initial_seconds": 2,
+    "retry_max_seconds": 8,
+    "retry_multiplier": 2,
+    "retryable_http_statuses": [
+      408,
+      409,
+      429,
+      500,
+      502,
+      503,
+      504
+    ],
+    "sdk_automatic_retry_count": 0,
+    "seed": null,
+    "stream": false,
+    "timeout_seconds": 120
+  },
+  "response_record_contract": {
+    "context_text_recorded_publicly": false,
+    "question_text_recorded_publicly": false,
+    "required_fields": [
+      "record_schema_version",
+      "configuration_id",
+      "condition_id",
+      "blinded_response_id",
+      "question_id",
+      "retrieved_evidence_sha256",
+      "prompt_sha256",
+      "requested_model_id",
+      "returned_model_id",
+      "temperature",
+      "top_p",
+      "reasoning_effort",
+      "response_id",
+      "request_started_at_utc",
+      "response_received_at_utc",
+      "input_token_count",
+      "output_token_count",
+      "total_token_count",
+      "system_fingerprint",
+      "retry_count",
+      "completion_status",
+      "response_text"
+    ],
+    "response_text_recorded_publicly": false
+  }
+}
