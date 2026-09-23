@@ -13,6 +13,11 @@ langchain-core
 langchain-openai
 langchain-text-splitters
 
+# Direct generation API and token accounting
+
+openai
+tiktoken
+
 # Vector search and numerical arrays
 
 faiss-cpu
