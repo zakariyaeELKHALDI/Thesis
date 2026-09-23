@@ -23,6 +23,12 @@ tiktoken
 faiss-cpu
 numpy
 
+# Analysis and visualization
+
+matplotlib
+pandas
+seaborn
+
 # Environment configuration
 
 python-dotenv
