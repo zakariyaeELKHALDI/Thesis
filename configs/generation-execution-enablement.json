@@ -1,0 +1,51 @@
+{
+  "authorization": {
+    "authorized_maximum_cost_usd": 25.0,
+    "relative_path": "configs/generation-cost-authorization.json",
+    "sha256": "699b56dccf17952f436ac0f3d419cb6a1b67abadf9b7e64a8676de35504d2c80"
+  },
+  "configuration": {
+    "relative_path": "configs/generation-evaluation-config.json",
+    "sha256": "55e1e709a5bd31486656668301d8e44c470673f14d745d7cfaae4a6c154d2667"
+  },
+  "configuration_id": "benchmark-generation-evaluation-v1",
+  "enabled_on_utc_date": "2026-09-23",
+  "execution_enablement_schema_version": "1.0",
+  "execution_status": "ENABLED",
+  "implementation": {
+    "commit": "93a8dedb9485cd5af13bcddac0901008108ebb56",
+    "execution_test_count": 54,
+    "full_suite_test_count": 172,
+    "relative_path": "src/geotech_rag/generation_execution.py",
+    "sha256": "79e6967e5513b29d528ac972ece3585842362bcf51b45461d65f5071521b8acf",
+    "tests_passed": true
+  },
+  "manifest": {
+    "record_count": 140,
+    "relative_path": "data/processed/evaluation/generation/v1/request-manifest.jsonl",
+    "sha256": "66aa5a5afbc1ccacedced56f55f2d1a6ba21a909f7e5630d14596505b5c3d64e"
+  },
+  "pricing_recheck": {
+    "checked_on_utc_date": "2026-09-23",
+    "gpt_6_astra_input_usd_per_million_tokens": 10.0,
+    "gpt_6_astra_output_usd_per_million_tokens": 50.0,
+    "model_rates_unchanged": true,
+    "official_openai_documentation_used": true,
+    "snapshot_relative_path": "configs/generation-pricing-snapshot.json",
+    "snapshot_sha256": "cb44165530f8eac7f5fd11c00c400c340a4566095ed57a8f54e83371650056e9",
+    "source_domain": "developers.openai.com"
+  },
+  "runtime_controls": {
+    "explicit_execute_flag_required": true,
+    "model_availability_preflight_required": true,
+    "paid_generation_enabled": true,
+    "parallel_request_count": 1,
+    "require_clean_worktree": true
+  },
+  "state_before_enablement": {
+    "api_request_made": false,
+    "generation_response_evidence_created": false,
+    "ground_truth_accessed": false,
+    "paid_generation_performed": false
+  }
+}
