@@ -1,0 +1,51 @@
+{
+  "billing_assumptions": {
+    "batch_discount_assumed": false,
+    "cached_input_discount_assumed": false,
+    "currency": "USD",
+    "data_residency_uplift_assumed": false,
+    "fast_or_priority_processing_assumed": false,
+    "flex_discount_assumed": false,
+    "input_treated_as_uncached": true,
+    "price_unit": "per_1_million_text_tokens",
+    "service_tier": "standard",
+    "tool_call_cost_expected": false
+  },
+  "configuration_id": "benchmark-generation-evaluation-v1",
+  "model_rates": {
+    "gpt-4-0613": {
+      "input_usd_per_million_tokens": 30.0,
+      "output_usd_per_million_tokens": 60.0,
+      "reference_model_page": "https://developers.openai.com/api/docs/models/gpt-4",
+      "reference_type": "fixed_snapshot"
+    },
+    "gpt-4.1-2025-04-14": {
+      "input_usd_per_million_tokens": 2.0,
+      "output_usd_per_million_tokens": 8.0,
+      "reference_model_page": "https://developers.openai.com/api/docs/models/gpt-4.1",
+      "reference_type": "fixed_snapshot"
+    },
+    "gpt-5-2025-08-07": {
+      "input_usd_per_million_tokens": 1.25,
+      "output_usd_per_million_tokens": 10.0,
+      "reference_model_page": "https://developers.openai.com/api/docs/models/gpt-5",
+      "reference_type": "fixed_snapshot"
+    },
+    "gpt-6-astra": {
+      "input_usd_per_million_tokens": 10.0,
+      "mutable_alias_pricing_must_be_rechecked_before_execution": true,
+      "output_usd_per_million_tokens": 50.0,
+      "reference_model_page": "https://developers.openai.com/api/docs/models",
+      "reference_type": "mutable_alias"
+    }
+  },
+  "preparation_audit_relative_path": "results/metrics/generation-preparation-audit.json",
+  "preparation_audit_sha256": "58cc8bab9b0e623d14601a439153afab8a69ee7621e63588cff1095236e9b339",
+  "pricing_checked_on": "2026-09-23",
+  "pricing_snapshot_schema_version": "1.0",
+  "source_access": {
+    "official_openai_documentation_used": true,
+    "pricing_api_request_made": false,
+    "source_domain": "developers.openai.com"
+  }
+}
