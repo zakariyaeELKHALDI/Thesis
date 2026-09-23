@@ -106,7 +106,7 @@
   "configuration_id": "benchmark-generation-evaluation-v1",
   "context_assembly": {
     "abort_if_context_limit_exceeded": true,
-    "context_record_field": "chunk_text",
+    "context_record_field": "text",
     "deduplication_enabled": false,
     "include_chunk_identifier": false,
     "include_rank": false,
