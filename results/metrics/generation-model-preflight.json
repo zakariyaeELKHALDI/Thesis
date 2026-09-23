@@ -1,0 +1,31 @@
+{
+  "all_required_models_available": true,
+  "api_response_content_recorded": false,
+  "checked_on_utc_date": "2026-09-23",
+  "completion_request_made": false,
+  "configuration_id": "benchmark-generation-evaluation-v1",
+  "enablement_commit": "9fa238d6ead170787e97bd7809f5971bf30d3103",
+  "enablement_relative_path": "configs/generation-execution-enablement.json",
+  "enablement_sha256": "04901dc6a2381a326f2a9f949199d7d1ac68469d2304f6fdf72de30bcd684797",
+  "endpoint": "GET /v1/models",
+  "evidence_schema_version": "1.0",
+  "ground_truth_accessed": false,
+  "implementation_commit": "93a8dedb9485cd5af13bcddac0901008108ebb56",
+  "implementation_sha256": "79e6967e5513b29d528ac972ece3585842362bcf51b45461d65f5071521b8acf",
+  "model_inventory_recorded": false,
+  "model_list_request_count": 1,
+  "model_list_request_made": true,
+  "openai_sdk_version": "2.53.0",
+  "paid_generation_performed": false,
+  "preflight_completed_at_utc": "2026-09-23T16:47:34.811649Z",
+  "preflight_started_at_utc": "2026-09-23T16:47:33.122587Z",
+  "private_manifest_parsed": false,
+  "required_model_count": 4,
+  "required_model_ids": [
+    "gpt-4-0613",
+    "gpt-4.1-2025-04-14",
+    "gpt-5-2025-08-07",
+    "gpt-6-astra"
+  ],
+  "sdk_automatic_retry_count": 0
+}
