@@ -1,0 +1,66 @@
+{
+  "authorization_recorded_on": "2026-09-23",
+  "authorization_schema_version": "1.0",
+  "authorization_scope": {
+    "condition_ids": [
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "extra_requests_authorized": false,
+    "maximum_attempt_count": 3,
+    "maximum_completed_response_count": 140,
+    "model_substitution_authorized": false,
+    "parameter_substitution_authorized": false,
+    "planned_request_count": 140,
+    "retries_permitted_only_within_frozen_policy_and_hard_cap": true,
+    "unplanned_conditions_authorized": false
+  },
+  "authorized_by_role": "researcher",
+  "authorized_headroom_usd": 7.04732,
+  "authorized_maximum_cost_usd": 25.0,
+  "budget_authorization_status": "AUTHORIZED",
+  "configuration_id": "benchmark-generation-evaluation-v1",
+  "currency": "USD",
+  "execution_authorization_status": "NOT_ENABLED",
+  "execution_controls": {
+    "abort_before_projected_cost_exceeds_cap": true,
+    "abort_if_updated_pricing_invalidates_cost_boundary": true,
+    "authorization_creation_starts_generation": false,
+    "automated_tests_required_before_enablement": true,
+    "gpt_6_astra_pricing_recheck_required_before_execution": true,
+    "paid_generation_enabled": false,
+    "projected_cost_check_required_before_each_request": true,
+    "runtime_hard_cost_cap_usd": 25.0,
+    "separate_committed_execution_implementation_required": true
+  },
+  "lineage": {
+    "cost_audit_commit": "9996501473d006c003663622fe042df605c011c9",
+    "cost_audit_relative_path": "results/metrics/generation-cost-audit.json",
+    "cost_audit_sha256": "dc3feb1771cc47eada4ab2775e79f065369c6d6766d5c525e19998e9b85684ac",
+    "generation_configuration_commit": "8803f22304a458faf638d9d785a4f3018e060c2a",
+    "generation_configuration_relative_path": "configs/generation-evaluation-config.json",
+    "generation_configuration_sha256": "55e1e709a5bd31486656668301d8e44c470673f14d745d7cfaae4a6c154d2667",
+    "preparation_audit_commit": "09601bbee8e5d5ab2328f716f67bf4940f1328d4",
+    "preparation_audit_relative_path": "results/metrics/generation-preparation-audit.json",
+    "preparation_audit_sha256": "58cc8bab9b0e623d14601a439153afab8a69ee7621e63588cff1095236e9b339",
+    "pricing_snapshot_commit": "e94d957039abbcd0f17bcb372d8295a54b2ab0f5",
+    "pricing_snapshot_relative_path": "configs/generation-pricing-snapshot.json",
+    "pricing_snapshot_sha256": "cb44165530f8eac7f5fd11c00c400c340a4566095ed57a8f54e83371650056e9",
+    "private_request_manifest_relative_path": "data/processed/evaluation/generation/v1/request-manifest.jsonl",
+    "private_request_manifest_sha256": "66aa5a5afbc1ccacedced56f55f2d1a6ba21a909f7e5630d14596505b5c3d64e"
+  },
+  "maximum_planned_single_run_cost_usd": 17.95268,
+  "state_at_authorization": {
+    "api_request_made": false,
+    "generation_response_evidence_created": false,
+    "ground_truth_accessed": false,
+    "paid_generation_performed": false
+  },
+  "theoretical_full_retry_exposure_authorized": false,
+  "theoretical_maximum_if_all_attempts_fully_billable_usd": 53.858039
+}
