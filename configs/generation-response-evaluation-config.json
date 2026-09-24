@@ -23,6 +23,7 @@
       "empty_responses_count_as_incorrect": true,
       "reported_separately": true
     },
+    "grouped_presentation_limitation": "Viewing seven answers to one question together can influence judgments by comparison; report this design choice when interpreting condition-level differences.",
     "model_generation_effect": {
       "conditions": [
         "P1",
@@ -59,6 +60,15 @@
     "within_condition_variance_claimed": false
   },
   "blinding": {
+    "answer_labels": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G"
+    ],
     "deterministic_order_required": true,
     "hidden_fields": [
       "condition_id",
@@ -76,27 +86,35 @@
       "response_id",
       "system_fingerprint"
     ],
-    "one_response_displayed_at_a_time": true,
-    "same_question_responses_may_not_be_grouped": true,
+    "one_response_displayed_at_a_time": false,
+    "presentation_unit": "one_question_with_seven_anonymized_answers",
+    "private_answer_id_mapping_required": true,
+    "question_order": "frozen_benchmark_order",
+    "same_question_responses_may_not_be_grouped": false,
     "unblinding_before_complete_validation_prohibited": true,
     "visible_fields": [
       "benchmark_question_text",
       "validated_reference_solution",
       "candidate_response_text",
       "rubric"
-    ]
+    ],
+    "within_question_answer_order": "deterministically_shuffled_from_frozen_input_fingerprints"
   },
   "checkpointing": {
-    "atomic_save_after_each_judgement": true,
+    "atomic_import_only_after_140_valid_judgements": true,
+    "atomic_save_after_each_judgement": false,
     "completed_judgement_overwrite_prohibited": true,
+    "completed_review_form_validated_before_import": true,
     "completion_requires_unique_judgement_count": 140,
     "condition_or_model_recorded_in_blinded_file": false,
     "explicit_audited_correction_required": true,
+    "private_editable_review_form": true,
     "question_text_repeated_in_judgement_file": false,
     "response_text_repeated_in_judgement_file": false,
-    "resume_supported": true
+    "resume_supported": true,
+    "returned_review_form_preserved": true
   },
-  "configuration_id": "benchmark-response-evaluation-v1",
+  "configuration_id": "benchmark-response-evaluation-v2-grouped-review",
   "consistency_rules": [
     "A correct response must use primary error category none.",
     "An incorrect response must use a non-none primary error category.",
@@ -105,7 +123,7 @@
     "Every blinded response identifier must occur exactly once.",
     "No condition or model identity may appear in the blinded judgement record."
   ],
-  "decision_status": "FROZEN_BEFORE_REFERENCE_RECONSTRUCTION_AND_RESPONSE_SCORING",
+  "decision_status": "FROZEN_WITH_PRE_SCORING_GROUPED_REVIEW_AMENDMENT",
   "empty_response_policy": {
     "answer_correctness": 0,
     "calculation_correctness": "not_applicable_or_0_according_to_the_prevalidated_question_requirement",
@@ -152,12 +170,12 @@
       "condition_identity_available": false,
       "generated_response_text_available": true,
       "order": 5,
-      "step": "domain_expert_scores_140_responses_in_blinded_order"
+      "step": "domain_expert_scores_140_responses_in_20_blinded_question_groups"
     },
     {
       "condition_identity_available": false,
       "order": 6,
-      "step": "validate_complete_blinded_judgement_set"
+      "step": "validate_returned_grouped_review_form_and_import_140_blinded_judgements"
     },
     {
       "condition_identity_available": true,
@@ -174,6 +192,15 @@
     "planned_response_review_count": 140,
     "sampling_or_extrapolation_permitted": false,
     "single_expert_limitation_must_be_reported": true
+  },
+  "grouped_review_amendment": {
+    "amended_on_utc_date": "2026-09-24",
+    "amendment_relative_path": "docs/grouped-blinded-response-review-amendment.md",
+    "human_scoring_started_at_amendment": false,
+    "reference_files_changed": false,
+    "reference_freeze_commit": "6b80434",
+    "response_file_changed": false,
+    "scoring_rules_changed": false
   },
   "lineage": {
     "generation_audit_commit": "e0b6e15731db46baffaf31fa425702e7a2c853a5",
@@ -227,10 +254,13 @@
   },
   "private_paths": {
     "blinded_judgements": "data/raw/evaluation/generation/v1/evaluation-judgements.jsonl",
+    "grouped_review_form": "data/raw/evaluation/generation/v1/blinded-grouped-response-review.docx",
+    "grouped_review_mapping": "data/raw/evaluation/generation/v1/blinded-grouped-response-mapping.json",
     "judgement_checkpoint_metadata": "data/raw/evaluation/generation/v1/evaluation-judgement-metadata.json",
     "judgement_correction_log": "data/raw/evaluation/generation/v1/evaluation-judgement-corrections.jsonl",
     "reference_answers": "data/raw/ground_truth/benchmark-reference-answers.jsonl",
-    "reference_validation_metadata": "data/raw/ground_truth/benchmark-reference-validation.json"
+    "reference_validation_metadata": "data/raw/ground_truth/benchmark-reference-validation.json",
+    "returned_grouped_review_form": "data/raw/evaluation/generation/v1/blinded-grouped-response-review-completed.docx"
   },
   "protocol_change_control": {
     "changes_after_scoring_starts": "Stop evaluation, document the amendment, invalidate earlier judgements and restart all affected scoring under one consistent contract.",
@@ -433,7 +463,8 @@
     "one_response_per_question_condition": true,
     "paired_by_question": true,
     "planned_judgement_count": 140,
-    "question_count": 20
+    "question_count": 20,
+    "review_presentation_unit": "20_questions_each_with_seven_blinded_answers"
   },
   "tracked_outputs": {
     "condition_summary_table": "results/tables/generation-evaluation.csv",

@@ -46,9 +46,10 @@ The evaluation must follow this order:
 3. Have the geotechnical engineering expert validate all
    reference solutions without access to generated responses.
 4. Freeze and fingerprint the validated reference-answer file.
-5. Present all 140 responses to the expert in deterministic
-   blinded order.
-6. Validate the completed blinded judgment set.
+5. Present the 140 responses in 20 question groups, each with
+   seven anonymized answers in deterministic shuffled order.
+6. Validate the completed private review form and import all
+   140 blinded judgments together.
 7. Unblind the scores and conduct the statistical analysis.
 
 Generated answers may not influence question eligibility,
@@ -161,29 +162,36 @@ single-expert design as a limitation.
 
 ## Blinding
 
-The expert sees only:
-
-- the benchmark question;
-- the validated reference solution;
-- one candidate response; and
-- the frozen rubric.
+For each benchmark question, the expert sees the question, its
+validated reference solution, the frozen rubric and seven
+candidate responses labelled A to G. The labels are assigned
+through a deterministic shuffle within each question. The
+private mapping to blinded response identifiers stays outside
+the expert-facing review form.
 
 Model identity, condition, retrieval status, temperature,
 reasoning effort, token usage, latency and API metadata remain
-hidden. Responses are presented in deterministic shuffled order
-and answers to the same question are not deliberately grouped.
+hidden. The original question order is retained. Viewing seven
+answers together may affect judgments through direct comparison;
+this presentation choice will be reported as a limitation.
 
 The blinded notebook cannot reveal condition-level results.
 
 ## Checkpointing and validation
 
-Each judgment is saved atomically. Evaluation can resume after
-interruption without regenerating or silently overwriting
-completed records.
+The expert and researcher complete one private editable review
+form. They may save and resume work on this form. The untouched
+blank form and the returned completed copy are preserved
+separately. The notebook validates all 140 entries, confirms
+the frozen input fingerprints and imports the full judgment
+set with one atomic write. Partial or invalid forms cannot
+produce a judgment file.
 
-The private judgment file stores the blinded response ID and
+The private judgment file stores blinded response IDs and
 evaluation fields, but does not duplicate question text,
-response text, model identity or condition identity.
+response text, model identity or condition identity. A completed
+import is never silently overwritten. Corrections require an
+explicit private audit record.
 
 Unblinding is blocked until 140 unique, structurally valid
 judgments are present and all reference and response
@@ -226,8 +234,10 @@ pair.
 ## Notebook separation
 
 `07_blinded_response_evaluation.ipynb` performs reference
-validation and blinded expert scoring. It cannot unblind
-results or calculate condition-level performance.
+validation, creates the private grouped review form and
+validates its completed return before importing blinded
+judgments. It cannot unblind results or calculate
+condition-level performance.
 
 `08_response_evaluation_analysis.ipynb` performs unblinding,
 statistical comparisons, tables, charts and research-question
@@ -255,3 +265,10 @@ If a scoring rule must change after scoring starts, evaluation
 stops. The amendment must be documented, affected judgments
 invalidated and all affected responses rescored under one
 consistent protocol. Silent rule changes are prohibited.
+
+## Pre-scoring presentation amendment
+
+We adopted grouped blinded review on 24 September 2026, after
+the reference freeze and before response scoring. The scope,
+rationale and preserved rules are recorded in
+`docs/grouped-blinded-response-review-amendment.md`.
