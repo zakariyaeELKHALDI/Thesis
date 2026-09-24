@@ -48,7 +48,7 @@ The evaluation must follow this order:
 4. Freeze and fingerprint the validated reference-answer file.
 5. Present the 140 responses in 20 question groups, each with
    seven anonymized answers in deterministic shuffled order.
-6. Validate the completed private review form and import all
+6. Validate the completed private scoring notebook and import all
    140 blinded judgments together.
 7. Unblind the scores and conduct the statistical analysis.
 
@@ -163,11 +163,15 @@ single-expert design as a limitation.
 ## Blinding
 
 For each benchmark question, the expert sees the question, its
-validated reference solution, the frozen rubric and seven
-candidate responses labelled A to G. The labels are assigned
+validated reference solution and grading requirements, the frozen
+rubric and seven candidate responses labelled A to G. The private
+notebook displays the baseline paper’s four evaluation criteria
+and its grounding, conceptual, calculation and deficiency error
+types alongside our operational definitions. The two additional
+error categories are identified as extensions to the paper. The labels are assigned
 through a deterministic shuffle within each question. The
 private mapping to blinded response identifiers stays outside
-the expert-facing review form.
+the expert-facing scoring notebook.
 
 Model identity, condition, retrieval status, temperature,
 reasoning effort, token usage, latency and API metadata remain
@@ -175,17 +179,19 @@ hidden. The original question order is retained. Viewing seven
 answers together may affect judgments through direct comparison;
 this presentation choice will be reported as a limitation.
 
-The blinded notebook cannot reveal condition-level results.
+The private scoring notebook contains no condition or model metadata.
+Notebook 07 remains the public reference-validation record.
 
 ## Checkpointing and validation
 
-The expert and researcher complete one private editable review
-form. They may save and resume work on this form. The untouched
-blank form and the returned completed copy are preserved
-separately. The notebook validates all 140 entries, confirms
-the frozen input fingerprints and imports the full judgment
-set with one atomic write. Partial or invalid forms cannot
-produce a judgment file.
+The expert and researcher complete one private editable scoring
+notebook with 20 question groups. They edit and save its score cells
+without executing them. The original blank notebook and the completed
+copy are preserved separately. The offline validation tool parses
+the completed score cells as data, confirms all 140 entries and
+the frozen fingerprints, and imports the full judgment set with
+one atomic write. Partial or invalid notebooks cannot produce a
+judgment file.
 
 The private judgment file stores blinded response IDs and
 evaluation fields, but does not duplicate question text,
@@ -233,11 +239,12 @@ pair.
 
 ## Notebook separation
 
-`07_blinded_response_evaluation.ipynb` performs reference
-validation, creates the private grouped review form and
-validates its completed return before importing blinded
-judgments. It cannot unblind results or calculate
-condition-level performance.
+`07_blinded_response_evaluation.ipynb` documents the approval
+and freeze of the reference package. It contains no generated
+answers or response scores. The separate private scoring notebook
+is generated and validated through the offline terminal tool
+`src/geotech_rag/grouped_response_review.py`. It is Git-ignored
+and cannot unblind results or calculate condition-level performance.
 
 `08_response_evaluation_analysis.ipynb` performs unblinding,
 statistical comparisons, tables, charts and research-question

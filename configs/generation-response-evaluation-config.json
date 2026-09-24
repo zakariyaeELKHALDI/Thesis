@@ -104,15 +104,15 @@
     "atomic_import_only_after_140_valid_judgements": true,
     "atomic_save_after_each_judgement": false,
     "completed_judgement_overwrite_prohibited": true,
-    "completed_review_form_validated_before_import": true,
+    "completed_review_notebook_validated_before_import": true,
     "completion_requires_unique_judgement_count": 140,
     "condition_or_model_recorded_in_blinded_file": false,
     "explicit_audited_correction_required": true,
-    "private_editable_review_form": true,
+    "private_editable_review_notebook": true,
     "question_text_repeated_in_judgement_file": false,
     "response_text_repeated_in_judgement_file": false,
     "resume_supported": true,
-    "returned_review_form_preserved": true
+    "returned_review_notebook_preserved": true
   },
   "configuration_id": "benchmark-response-evaluation-v2-grouped-review",
   "consistency_rules": [
@@ -175,7 +175,7 @@
     {
       "condition_identity_available": false,
       "order": 6,
-      "step": "validate_returned_grouped_review_form_and_import_140_blinded_judgements"
+      "step": "validate_completed_grouped_review_notebook_and_import_140_blinded_judgements"
     },
     {
       "condition_identity_available": true,
@@ -197,6 +197,7 @@
     "amended_on_utc_date": "2026-09-24",
     "amendment_relative_path": "docs/grouped-blinded-response-review-amendment.md",
     "human_scoring_started_at_amendment": false,
+    "private_notebook_format_adopted_before_scoring": true,
     "reference_files_changed": false,
     "reference_freeze_commit": "6b80434",
     "response_file_changed": false,
@@ -225,9 +226,11 @@
   "notebook_plan": {
     "analysis_notebook": "notebooks/08_response_evaluation_analysis.ipynb",
     "analysis_notebook_runs_only_after_140_valid_judgements": true,
-    "blinded_evaluation_notebook": "notebooks/07_blinded_response_evaluation.ipynb",
-    "blinded_notebook_may_unblind_results": false,
-    "private_text_may_not_remain_in_tracked_outputs": true
+    "offline_scoring_tool": "src/geotech_rag/grouped_response_review.py",
+    "private_scoring_notebook": "data/raw/evaluation/generation/v1/blinded-grouped-response-review-completed.ipynb",
+    "private_scoring_notebook_may_unblind_results": false,
+    "private_text_may_not_remain_in_tracked_outputs": true,
+    "reference_validation_notebook": "notebooks/07_blinded_response_evaluation.ipynb"
   },
   "primary_outcome": {
     "allowed_values": [
@@ -254,13 +257,13 @@
   },
   "private_paths": {
     "blinded_judgements": "data/raw/evaluation/generation/v1/evaluation-judgements.jsonl",
-    "grouped_review_form": "data/raw/evaluation/generation/v1/blinded-grouped-response-review.docx",
+    "completed_grouped_review_notebook": "data/raw/evaluation/generation/v1/blinded-grouped-response-review-completed.ipynb",
     "grouped_review_mapping": "data/raw/evaluation/generation/v1/blinded-grouped-response-mapping.json",
+    "grouped_review_notebook": "data/raw/evaluation/generation/v1/blinded-grouped-response-review.ipynb",
     "judgement_checkpoint_metadata": "data/raw/evaluation/generation/v1/evaluation-judgement-metadata.json",
     "judgement_correction_log": "data/raw/evaluation/generation/v1/evaluation-judgement-corrections.jsonl",
     "reference_answers": "data/raw/ground_truth/benchmark-reference-answers.jsonl",
-    "reference_validation_metadata": "data/raw/ground_truth/benchmark-reference-validation.json",
-    "returned_grouped_review_form": "data/raw/evaluation/generation/v1/blinded-grouped-response-review-completed.docx"
+    "reference_validation_metadata": "data/raw/ground_truth/benchmark-reference-validation.json"
   },
   "protocol_change_control": {
     "changes_after_scoring_starts": "Stop evaluation, document the amendment, invalidate earlier judgements and restart all affected scoring under one consistent contract.",
