@@ -1,0 +1,444 @@
+{
+  "analysis_plan": {
+    "accuracy_summary": {
+      "interval": "Wilson 95 percent confidence interval",
+      "measure": "correct_gradable_responses_divided_by_gradable_questions"
+    },
+    "adaptability_analysis": {
+      "response_score_reported": true,
+      "small_strata_interpreted_descriptively": true,
+      "stratify_by": [
+        "problem_type",
+        "cognitive_level"
+      ]
+    },
+    "baseline_paper_compatibility": {
+      "binary_accuracy_retained": true,
+      "error_taxonomy_retained_with_documented_extension": true,
+      "paired_tests_primary": true,
+      "paper_style_chi_square_secondary_only": true,
+      "undocumented_82_5_percent_not_reverse_engineered": true
+    },
+    "completion_summary": {
+      "empty_responses_count_as_incorrect": true,
+      "reported_separately": true
+    },
+    "model_generation_effect": {
+      "conditions": [
+        "P1",
+        "M1",
+        "M2",
+        "M3"
+      ],
+      "omnibus_test": "Cochran Q test",
+      "pairwise_test": "exact McNemar test"
+    },
+    "multiple_comparison_adjustment": "Holm method",
+    "reason": "Only one frozen response exists for each question-condition pair.",
+    "retrieval_effect": {
+      "conditions": [
+        "P0",
+        "P1"
+      ],
+      "primary_test": "exact McNemar test"
+    },
+    "secondary_ordinal_analysis": {
+      "applicability_policy": "Use only the common prevalidated applicable question set and report its denominator.",
+      "three_or_more_condition_test": "Friedman test followed by paired Wilcoxon tests",
+      "two_condition_test": "paired Wilcoxon signed-rank test"
+    },
+    "temperature_effect": {
+      "conditions": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "omnibus_test": "Cochran Q test",
+      "pairwise_test": "exact McNemar test"
+    },
+    "within_condition_variance_claimed": false
+  },
+  "blinding": {
+    "deterministic_order_required": true,
+    "hidden_fields": [
+      "condition_id",
+      "requested_model_id",
+      "returned_model_id",
+      "temperature",
+      "top_p",
+      "reasoning_effort",
+      "retrieval_enabled",
+      "retrieval_depth_k",
+      "input_token_count",
+      "output_token_count",
+      "total_token_count",
+      "latency",
+      "response_id",
+      "system_fingerprint"
+    ],
+    "one_response_displayed_at_a_time": true,
+    "same_question_responses_may_not_be_grouped": true,
+    "unblinding_before_complete_validation_prohibited": true,
+    "visible_fields": [
+      "benchmark_question_text",
+      "validated_reference_solution",
+      "candidate_response_text",
+      "rubric"
+    ]
+  },
+  "checkpointing": {
+    "atomic_save_after_each_judgement": true,
+    "completed_judgement_overwrite_prohibited": true,
+    "completion_requires_unique_judgement_count": 140,
+    "condition_or_model_recorded_in_blinded_file": false,
+    "explicit_audited_correction_required": true,
+    "question_text_repeated_in_judgement_file": false,
+    "response_text_repeated_in_judgement_file": false,
+    "resume_supported": true
+  },
+  "configuration_id": "benchmark-response-evaluation-v1",
+  "consistency_rules": [
+    "A correct response must use primary error category none.",
+    "An incorrect response must use a non-none primary error category.",
+    "A no-visible-answer record must follow the frozen empty-response policy.",
+    "Not-applicable secondary values must match the frozen reference-answer applicability fields.",
+    "Every blinded response identifier must occur exactly once.",
+    "No condition or model identity may appear in the blinded judgement record."
+  ],
+  "decision_status": "FROZEN_BEFORE_REFERENCE_RECONSTRUCTION_AND_RESPONSE_SCORING",
+  "empty_response_policy": {
+    "answer_correctness": 0,
+    "calculation_correctness": "not_applicable_or_0_according_to_the_prevalidated_question_requirement",
+    "completion_reported_separately": true,
+    "condition_identity_hidden_from_evaluator": true,
+    "domain_expert_confirmation_required": true,
+    "exclusion_permitted": false,
+    "explanation_clarity": 0,
+    "formula_integration": "not_applicable_or_0_according_to_the_prevalidated_question_requirement",
+    "observed_empty_condition_count": 1,
+    "observed_empty_response_count": 9,
+    "primary_error_category": "no_visible_answer",
+    "regeneration_permitted": false,
+    "task_adaptability": 0,
+    "unit_correctness": "not_applicable_or_0_according_to_the_prevalidated_question_requirement",
+    "unsupported_claims": false
+  },
+  "evaluation_sequence": [
+    {
+      "generated_response_text_available": false,
+      "order": 1,
+      "reference_answer_text_available": false,
+      "step": "freeze_public_evaluation_contract"
+    },
+    {
+      "generated_response_text_available": false,
+      "order": 2,
+      "reference_answer_text_available": true,
+      "step": "reconstruct_private_reference_answers_from_solution_manual"
+    },
+    {
+      "generated_response_text_available": false,
+      "order": 3,
+      "reference_answer_text_available": true,
+      "step": "domain_expert_validates_all_20_reference_answers"
+    },
+    {
+      "generated_response_text_available": false,
+      "order": 4,
+      "reference_answer_text_available": true,
+      "step": "freeze_reference_answer_file_and_fingerprint"
+    },
+    {
+      "condition_identity_available": false,
+      "generated_response_text_available": true,
+      "order": 5,
+      "step": "domain_expert_scores_140_responses_in_blinded_order"
+    },
+    {
+      "condition_identity_available": false,
+      "order": 6,
+      "step": "validate_complete_blinded_judgement_set"
+    },
+    {
+      "condition_identity_available": true,
+      "order": 7,
+      "step": "unblind_and_compute_aggregate_evaluation_results"
+    }
+  ],
+  "evaluator": {
+    "all_responses_reviewed_by_domain_expert": true,
+    "domain_expert": "Prof. Peña Olarte",
+    "evaluator_count": 1,
+    "evaluator_role": "geotechnical_engineering_domain_expert",
+    "inter_rater_reliability_claimed": false,
+    "planned_response_review_count": 140,
+    "sampling_or_extrapolation_permitted": false,
+    "single_expert_limitation_must_be_reported": true
+  },
+  "lineage": {
+    "generation_audit_commit": "e0b6e15731db46baffaf31fa425702e7a2c853a5",
+    "private_benchmark_question_relative_path": "data/raw/evaluation/questions/benchmark-questions.jsonl",
+    "private_response_relative_path": "data/raw/evaluation/generation/v1/responses.jsonl",
+    "private_response_sha256": "b5b6d661ef17d7b931561941ba3a488fe93e4344ecb11944a6e1cf93aa6d9a76",
+    "public_inputs": {
+      "generation_audit_notebook": {
+        "expected_sha256": "87c857b6293686ba783d0a621906766812834c8063fc41ba387102b531baf547",
+        "relative_path": "notebooks/06_generation_audit.ipynb"
+      },
+      "generation_configuration": {
+        "expected_sha256": "55e1e709a5bd31486656668301d8e44c470673f14d745d7cfaae4a6c154d2667",
+        "relative_path": "configs/generation-evaluation-config.json"
+      },
+      "generation_protocol": {
+        "expected_sha256": "82b8854eabd6e2eb474a12ca8c72f94f962a4df0c46a68dd4ad4d9142c9b50db",
+        "relative_path": "docs/generation-evaluation-protocol.md"
+      }
+    }
+  },
+  "notebook_plan": {
+    "analysis_notebook": "notebooks/08_response_evaluation_analysis.ipynb",
+    "analysis_notebook_runs_only_after_140_valid_judgements": true,
+    "blinded_evaluation_notebook": "notebooks/07_blinded_response_evaluation.ipynb",
+    "blinded_notebook_may_unblind_results": false,
+    "private_text_may_not_remain_in_tracked_outputs": true
+  },
+  "primary_outcome": {
+    "allowed_values": [
+      0,
+      1
+    ],
+    "correct_rule": "All materially required results are supplied, the method and explanation contain no material engineering error, and the response satisfies applicable formula, numerical and unit requirements.",
+    "correct_value": 1,
+    "denominator_policy": "Use every prevalidated gradable question; never remove a response because it is poor or empty.",
+    "description": "Binary question-level correctness for baseline-compatible accuracy.",
+    "equivalent_method_policy": "Accept a technically valid equivalent method when it satisfies the same engineering requirements.",
+    "field": "answer_correctness",
+    "incorrect_rules": [
+      "A requested final result is absent, even if some method or guidance is useful.",
+      "Any materially required part of a multi-part question is absent or incorrect.",
+      "The final result is incorrect outside the prevalidated tolerance.",
+      "The response reaches a correct value through materially incorrect or misleading reasoning.",
+      "A required unit is incorrect or makes the result technically uninterpretable.",
+      "A material unsupported claim changes the engineering meaning of the answer.",
+      "No visible answer, refusal or unusable answer is returned."
+    ],
+    "incorrect_value": 0,
+    "rounding_policy": "Accept values within the question-specific tolerance frozen in the reference-answer record."
+  },
+  "private_paths": {
+    "blinded_judgements": "data/raw/evaluation/generation/v1/evaluation-judgements.jsonl",
+    "judgement_checkpoint_metadata": "data/raw/evaluation/generation/v1/evaluation-judgement-metadata.json",
+    "judgement_correction_log": "data/raw/evaluation/generation/v1/evaluation-judgement-corrections.jsonl",
+    "reference_answers": "data/raw/ground_truth/benchmark-reference-answers.jsonl",
+    "reference_validation_metadata": "data/raw/ground_truth/benchmark-reference-validation.json"
+  },
+  "protocol_change_control": {
+    "changes_after_scoring_starts": "Stop evaluation, document the amendment, invalidate earlier judgements and restart all affected scoring under one consistent contract.",
+    "changes_before_scoring": "Must be documented, validated and committed before scoring starts.",
+    "silent_rule_change_prohibited": true
+  },
+  "question_eligibility": {
+    "default_expected_gradable_question_count": 20,
+    "determined_before_response_scoring": true,
+    "determined_from": [
+      "benchmark_question",
+      "solution_manual",
+      "domain_expert_validation"
+    ],
+    "generated_responses_may_not_influence_eligibility": true,
+    "post_hoc_condition_specific_exclusion_prohibited": true,
+    "ungradable_question_policy": "exclude_the_question_symmetrically_from_every_condition_and_report_the_reason"
+  },
+  "recorded_on_utc_date": "2026-09-24",
+  "reference_answer_contract": {
+    "all_gradable_records_must_be_validated": true,
+    "allowed_validation_statuses": [
+      "pending",
+      "validated",
+      "rejected"
+    ],
+    "domain_expert_validation_required": true,
+    "equation_format": "Readable Markdown with LaTeX for mathematical symbols, equations, subscripts and superscripts.",
+    "manual_equation_review_required": true,
+    "must_be_frozen_before_response_text_is_loaded": true,
+    "one_record_per_question": true,
+    "record_count": 20,
+    "required_fields": [
+      "reference_answer_schema_version",
+      "question_id",
+      "source_problem_id",
+      "reference_solution_markdown",
+      "accepted_equivalent_methods",
+      "required_final_results",
+      "formula_applicable",
+      "required_formulae",
+      "calculation_applicable",
+      "unit_applicable",
+      "accepted_units",
+      "numeric_tolerances",
+      "problem_type",
+      "cognitive_level",
+      "gradable",
+      "exclusion_reason",
+      "solution_source_document_sha256",
+      "solution_source_page_numbers",
+      "validation_status",
+      "validated_by_role",
+      "validation_note"
+    ]
+  },
+  "response_evaluation_schema_version": "1.0",
+  "secondary_judgements": {
+    "calculation_correctness": {
+      "allowed_values": [
+        "not_applicable",
+        0,
+        1,
+        2
+      ],
+      "scale": {
+        "0": "The calculation is absent or materially incorrect.",
+        "1": "The calculation is substantially correct but contains a limited arithmetic, substitution or rounding error.",
+        "2": "The calculation and substitutions are correct within the frozen tolerance.",
+        "not_applicable": "No calculation is required."
+      }
+    },
+    "explanation_clarity": {
+      "allowed_values": [
+        0,
+        1,
+        2
+      ],
+      "scale": {
+        "0": "The explanation is absent, unusable, contradictory or materially misleading.",
+        "1": "The explanation is understandable but incomplete, unclear or poorly structured.",
+        "2": "The explanation is clear, coherent and sufficient for the requested problem."
+      }
+    },
+    "formula_integration": {
+      "allowed_values": [
+        "not_applicable",
+        0,
+        1,
+        2
+      ],
+      "scale": {
+        "0": "The required formula is absent, irrelevant or materially incorrect.",
+        "1": "Formula selection or use is partly correct but contains a material omission or error.",
+        "2": "The appropriate formula is selected and applied correctly.",
+        "not_applicable": "The validated question does not require formula selection or application."
+      }
+    },
+    "judgement_confidence": {
+      "allowed_values": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "judgement_note": {
+      "private": true,
+      "required_when": [
+        "answer_correctness_is_0",
+        "any_secondary_score_is_partial",
+        "primary_error_category_is_other",
+        "judgement_confidence_is_low"
+      ]
+    },
+    "primary_error_category": {
+      "allowed_values": [
+        "none",
+        "grounding",
+        "conceptual",
+        "calculation",
+        "deficiency",
+        "no_visible_answer",
+        "other"
+      ],
+      "rules": {
+        "calculation": "The method is substantially appropriate but arithmetic, substitution or numerical work causes the incorrect answer.",
+        "conceptual": "The response demonstrates a material misunderstanding of the engineering concept.",
+        "deficiency": "A visible response cannot complete the required task because necessary handling or capability is absent.",
+        "grounding": "The response selects an inappropriate equation, constraint, assumption or problem representation.",
+        "no_visible_answer": "The API record contains no visible answer for evaluation.",
+        "none": "Required when answer_correctness is 1.",
+        "other": "An incorrect response does not fit the preceding categories; an explanatory note is mandatory."
+      }
+    },
+    "task_adaptability": {
+      "aggregate_interpretation": "Also report performance across prevalidated problem-type and cognitive-level strata.",
+      "allowed_values": [
+        0,
+        1,
+        2
+      ],
+      "scale": {
+        "0": "The response does not adapt its method or format to the problem type.",
+        "1": "The response shows partial adaptation but misses an important task-specific need.",
+        "2": "The response appropriately adapts its method, detail and presentation to the problem type and requested output."
+      }
+    },
+    "unit_correctness": {
+      "allowed_values": [
+        "not_applicable",
+        0,
+        1,
+        2
+      ],
+      "scale": {
+        "0": "Required units are absent or materially incorrect.",
+        "1": "Units are mostly correct but incompletely reported or inconsistently presented.",
+        "2": "Units are correct and clearly associated with the relevant quantities.",
+        "not_applicable": "Units are not applicable to the required answer."
+      }
+    },
+    "unsupported_claims": {
+      "allowed_values": [
+        false,
+        true
+      ],
+      "material_claim_effect": "A material unsupported claim can make the primary correctness score incorrect."
+    }
+  },
+  "state_at_contract_creation": {
+    "empty_response_count": 9,
+    "generation_complete": true,
+    "generation_response_count": 140,
+    "human_response_scoring_started": false,
+    "reference_answer_file_created": false,
+    "responses_unblinded_for_scoring": false,
+    "selective_regeneration_performed": false,
+    "solution_manual_loaded_for_response_scoring": false,
+    "visible_response_count": 131
+  },
+  "study_design": {
+    "comparison_groups": {
+      "model_generation_effect": [
+        "P1",
+        "M1",
+        "M2",
+        "M3"
+      ],
+      "retrieval_effect": [
+        "P0",
+        "P1"
+      ],
+      "temperature_effect": [
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "condition_count": 7,
+    "one_response_per_question_condition": true,
+    "paired_by_question": true,
+    "planned_judgement_count": 140,
+    "question_count": 20
+  },
+  "tracked_outputs": {
+    "condition_summary_table": "results/tables/generation-evaluation.csv",
+    "evaluation_metrics": "results/metrics/generation-evaluation.json",
+    "pairwise_comparison_table": "results/tables/generation-pairwise-comparisons.csv",
+    "secondary_score_table": "results/tables/generation-secondary-scores.csv"
+  }
+}
