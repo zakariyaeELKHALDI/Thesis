@@ -1,0 +1,20 @@
+{
+  "figure_sha256": {
+    "generation-accuracy-and-completion.png": "758b0e42ab5324ba7e67455b343967a5a887c1a26c7098838457a354ade81b80",
+    "generation-accuracy-and-completion.svg": "91b425f3d0246524185647eabcd1de623e69221af91bcf194a43bcde1b8b576d",
+    "generation-correctness-and-errors.png": "770ab258e58b22f63995fba25156ba108fc8fae95e979df047a5d0064571c826",
+    "generation-correctness-and-errors.svg": "b9e39308d6d3a584723be22b446837a621f1a4b5d0fde3613d5751c1e7cc4aa4",
+    "generation-secondary-scores.png": "1c3a0b01cc46acd82b7284b7002db2aa0bc7962679cc66d10303c37bda757ece",
+    "generation-secondary-scores.svg": "e3bee12be4b09ab78488a78f0a6257e742895f707639babf7e983835aeb41255"
+  },
+  "input_sha256": {
+    "results/metrics/generation-evaluation.json": "134d28d43ae605b2eb06659b2bd4a71a9342a2cdd856fd9ad7cd5f1ed97dc253",
+    "results/tables/generation-error-distribution.csv": "dacfbfb0b7c930b113c164507e26e347775af13b6e2e35f9a7754c92cb4dae19",
+    "results/tables/generation-evaluation.csv": "8864bda3284f3addc0c849ae4ed56286a685f5635f0f47a615535fdceb3acd2c",
+    "results/tables/generation-pairwise-comparisons.csv": "3b3fa163971e68b4d4fa1400aa3a1ab33c9b7a8baa123612968a9895bafa3c5a",
+    "results/tables/generation-secondary-scores.csv": "aaccfb89ca8f1173a959a0b1b73885749fff6d6acd7da1e9e31bc01c2efb013c"
+  },
+  "judgments_sha256": "ad861d0d40bc4bfa59a0bda5b6f57abbff0aaac4b772cb9daad7adc4317ca567",
+  "rendering_library": "matplotlib 3.11.2",
+  "source_commit": "9abcd8f"
+}
